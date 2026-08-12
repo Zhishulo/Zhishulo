@@ -6,7 +6,7 @@
     assets/projects/shisikelang-cover.webp  → Galgame 封面
     assets/projects/bunopet-cover.jpg       → 智能体封面
     assets/projects/bilstm-cover.png        → AI 项目架构图
-    assets/neon-city.gif                    → 霓虹都市像素动画（4.5 秒循环）
+    assets/forest-dream.gif                 → 森林之梦像素短片（6 秒循环）
   "贪吃蛇"由 Platane/snk 自动生成（跟随 GitHub 贡献图，每 12 小时更新，支持暗黑模式）。
 ================================================================ -->
 
@@ -167,15 +167,15 @@
 
 <br>
 
-<!-- ===================== 霓虹都市 · 像素动画 ===================== -->
+<!-- ===================== 森林之梦 · 像素短片 ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2 style="color:#00f0ff;text-shadow:0 0 14px rgba(0,240,255,.6);letter-spacing:3px;">🌆 霓虹都市 &nbsp;|&nbsp; Neon City</h2>
+  <h2 style="color:#9ec59a;text-shadow:0 0 14px rgba(158,197,154,.55);letter-spacing:3px;">🌿 森林之梦 &nbsp;|&nbsp; Forest Dream</h2>
 
-  <img src="assets/neon-city.gif" width="100%" alt="Neon City —— 雨夜霓虹都市：全息广告、雾中飞车、彩色灯光下的雨与倒影（4.5 秒无缝循环像素动画）">
+  <img src="assets/forest-dream.gif" width="100%" alt="Forest Dream —— 治愈系自然森林像素短片：晨雾、微风、动物、阵雨与雨后阳光（6 秒无缝循环）">
   <p>
-    雨夜 · 霓虹 · 雾中飞车 —— 高精度像素动画，4.5 秒无缝循环<br>
-    <sub>由 <code>scripts/make_neon_city.py</code> 纯代码逐像素绘制</sub>
+    晨雾 · 微风 · 动物 · 阵雨 · 雨后阳光 —— 治愈系像素短片，6 秒无缝循环<br>
+    <sub>由 <code>scripts/make_forest_dream.py</code> 纯代码逐像素绘制</sub>
   </p>
 </div>
 
