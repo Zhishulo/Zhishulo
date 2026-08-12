@@ -1,12 +1,13 @@
 <!-- ================================================================
   Zhishulo 的 GitHub 主页 README
-  需要补充的图片（替换同名文件即可，无需改代码）：
-    1. assets/avatar-placeholder.svg      → 你的头像
-    2. assets/anime-placeholder-1.svg     → 二次元图片 1
-    3. assets/anime-placeholder-2.svg     → 二次元图片 2
-    4. assets/projects/*.svg              → 三个项目的封面图
-  "贡献蛇"动图由 GitHub Action 自动生成（首次推送后手动跑一次
-  Actions → Generate Snake → Run workflow，之后每天自动更新）。
+  图片均已就位：
+    assets/avatar.png                       → 头像
+    assets/anime-1.jpg / anime-2.jpg        → 二次元图片 ×2
+    assets/projects/shisikelang-cover.webp  → Galgame 封面
+    assets/projects/bunopet-cover.jpg       → 智能体封面
+    assets/projects/bilstm-cover.png        → AI 项目架构图
+    仅剩可选项：assets/projects/cyber-symphony-cover.svg（音乐厅封面）
+  "签到蛇"由 GitHub Action 每天自动生成（连续打卡天数越多蛇越长）。
 ================================================================ -->
 
 <!-- ===================== 顶部动态横幅 ===================== -->
@@ -20,8 +21,7 @@
 
 <!-- ===================== 自我介绍 ===================== -->
 <div align="center">
-  <!-- TODO: 将 assets/avatar-placeholder.svg 替换为你的头像图片 -->
-  <img src="assets/avatar-placeholder.svg" width="150" height="150" alt="Avatar">
+  <img src="assets/avatar.png" width="150" height="150" alt="Avatar">
 
   <h2>👋 你好，我是 <b>Zhishulo</b></h2>
   <p>
@@ -75,24 +75,21 @@
 <table align="center">
   <tr>
     <td align="center" width="33%" style="border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:14px 12px;background:rgba(16,8,36,.35);box-shadow:inset 0 0 26px rgba(123,47,247,.08);">
-      <!-- TODO: 替换 assets/projects/shisikelang-cover.svg 为游戏封面 -->
-      <img src="assets/projects/shisikelang-cover.svg" width="320" alt="ShiKeLangSummer cover">
+      <img src="assets/projects/shisikelang-cover.webp" width="320" alt="ShiKeLangSummer cover">
       <h3><a href="https://github.com/Zhishulo/ShiKeLangSummer">🎮 ShiKeLangSummer</a></h3>
       <p>我的 <b>第一个 Galgame</b> —— 文字、音乐与选择，讲一个夏天的故事。</p>
       <img src="https://img.shields.io/badge/Galgame-FA8C16?style=for-the-badge" alt="Galgame">
       <img src="https://img.shields.io/badge/First%20Work-7C3AED?style=for-the-badge" alt="First Work">
     </td>
     <td align="center" width="33%" style="border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:14px 12px;background:rgba(16,8,36,.35);box-shadow:inset 0 0 26px rgba(123,47,247,.08);">
-      <!-- TODO: 替换 assets/projects/bunopet-cover.svg 为智能体封面 -->
-      <img src="assets/projects/bunopet-cover.svg" width="320" alt="BunoPet cover">
+      <img src="assets/projects/bunopet-cover.jpg" width="320" alt="BunoPet cover">
       <h3><a href="https://github.com/Zhishulo/BunoPet">🤖 BunoPet</a></h3>
       <p>我的 <b>首个智能体（Agent）</b> —— 会陪伴、能对话的 AI 宠物。</p>
       <img src="https://img.shields.io/badge/Agent-00f2fe?style=for-the-badge" alt="Agent">
       <img src="https://img.shields.io/badge/AI%20Pet-4facfe?style=for-the-badge" alt="AI Pet">
     </td>
     <td align="center" width="33%" style="border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:14px 12px;background:rgba(16,8,36,.35);box-shadow:inset 0 0 26px rgba(123,47,247,.08);">
-      <!-- TODO: 替换 assets/projects/bilstm-cover.svg 为项目架构图/效果图 -->
-      <img src="assets/projects/bilstm-cover.svg" width="320" alt="bilstm-logit-lens cover">
+      <img src="assets/projects/bilstm-cover.png" width="320" alt="bilstm-logit-lens cover">
       <h3><a href="https://github.com/Zhishulo/bilstm-logit-lens">🧠 bilstm-logit-lens</a></h3>
       <p>我目前 <b>最拿得出手的 AI 项目</b> —— BiLSTM + Logit Lens 可解释性系统。</p>
       <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&amp;logo=pytorch&amp;logoColor=white" alt="PyTorch">
@@ -125,10 +122,9 @@
   <img src="assets/divider.svg" width="100%" alt="">
   <h2 style="color:#ff9f43;text-shadow:0 0 14px rgba(255,159,67,.55);letter-spacing:3px;">🌸 二次元角落 &nbsp;|&nbsp; Anime Corner</h2>
 
-  <!-- TODO: 将 assets/anime-placeholder-*.svg 替换为你喜欢的二次元图片 -->
-  <img src="assets/anime-placeholder-1.svg" width="44%" alt="Anime 1">
+  <img src="assets/anime-1.jpg" width="44%" alt="Anime 1">
   &nbsp;&nbsp;
-  <img src="assets/anime-placeholder-2.svg" width="44%" alt="Anime 2">
+  <img src="assets/anime-2.jpg" width="44%" alt="Anime 2">
 
   <p>
     <img src="https://img.shields.io/badge/二次元浓度-██████████%20100%25-FF69B4?style=for-the-badge" alt="Anime concentration">
