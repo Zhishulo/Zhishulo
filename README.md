@@ -6,7 +6,7 @@
     assets/projects/shisikelang-cover.webp  → Galgame 封面
     assets/projects/bunopet-cover.jpg       → 智能体封面
     assets/projects/bilstm-cover.png        → AI 项目架构图
-    assets/neon-alley.gif                   → 赛博小巷像素动画（4 秒循环）
+    assets/neon-city.gif                    → 霓虹都市像素动画（4.5 秒循环）
   "签到蛇"由 GitHub Action 每天自动生成（连续打卡天数越多蛇越长）。
 ================================================================ -->
 
@@ -167,15 +167,15 @@
 
 <br>
 
-<!-- ===================== 赛博小巷 · 像素动画 ===================== -->
+<!-- ===================== 霓虹都市 · 像素动画 ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2 style="color:#00f0ff;text-shadow:0 0 14px rgba(0,240,255,.6);letter-spacing:3px;">🌧️ 赛博小巷 &nbsp;|&nbsp; Neon Alley</h2>
+  <h2 style="color:#00f0ff;text-shadow:0 0 14px rgba(0,240,255,.6);letter-spacing:3px;">🌆 霓虹都市 &nbsp;|&nbsp; Neon City</h2>
 
-  <img src="assets/neon-alley.gif" width="100%" alt="Neon Alley —— 雨夜霓虹小巷中孤独前行的赛博武士（4 秒无缝循环像素动画）">
+  <img src="assets/neon-city.gif" width="100%" alt="Neon City —— 雨夜霓虹都市：全息广告、雾中飞车、彩色灯光下的雨与倒影（4.5 秒无缝循环像素动画）">
   <p>
-    雨夜 · 霓虹 · 孤独的赛博武士 —— 像素动画，4 秒无缝循环<br>
-    <sub>由 <code>scripts/make_neon_alley.py</code> 纯代码逐像素绘制</sub>
+    雨夜 · 霓虹 · 雾中飞车 —— 高精度像素动画，4.5 秒无缝循环<br>
+    <sub>由 <code>scripts/make_neon_city.py</code> 纯代码逐像素绘制</sub>
   </p>
 </div>
 
