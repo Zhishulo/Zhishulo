@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="300" height="300">
+  <defs>
+    <linearGradient id="abg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0c29"/>
+      <stop offset="100%" stop-color="#302b63"/>
+    </linearGradient>
+    <linearGradient id="aring" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#f093fb"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="-150 0" to="150 0" dur="6s" repeatCount="indefinite"/>
+    </linearGradient>
+  </defs>
+  <rect width="300" height="300" rx="150" fill="url(#abg)"/>
+  <circle cx="150" cy="150" r="136" fill="none" stroke="url(#aring)" stroke-width="4" stroke-dasharray="14 10">
+    <animateTransform attributeName="transform" type="rotate" from="0 150 150" to="360 150 150" dur="20s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="150" cy="112" r="38" fill="#6bcbff" opacity="0.25"/>
+  <path d="M70 235 a80 62 0 0 1 160 0" fill="#6bcbff" opacity="0.25"/>
+  <text x="150" y="262" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#a9c1ff">头像待补充</text>
+  <text x="150" y="282" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="10" fill="#7a8fc0">replace assets/avatar-placeholder.svg</text>
+</svg>

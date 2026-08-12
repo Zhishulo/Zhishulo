@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 240" width="1000" height="240">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f0c29">
+        <animate attributeName="stop-color" values="#0f0c29;#302b63;#24243e;#0f0c29" dur="14s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#302b63">
+        <animate attributeName="stop-color" values="#302b63;#24243e;#0f0c29;#302b63" dur="14s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#24243e">
+        <animate attributeName="stop-color" values="#24243e;#0f0c29;#302b63;#24243e" dur="14s" repeatCount="indefinite"/>
+      </stop>
+    </linearGradient>
+    <linearGradient id="neon" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="50%" stop-color="#4facfe"/>
+      <stop offset="100%" stop-color="#f093fb"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="-400 0" to="400 0" dur="7s" repeatCount="indefinite"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4facfe" stop-opacity="0.30"/>
+      <stop offset="100%" stop-color="#4facfe" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1000" height="240" fill="url(#bg)"/>
+
+  <!-- 呼吸光晕 -->
+  <circle cx="500" cy="120" r="170" fill="url(#glow)">
+    <animate attributeName="r" values="150;195;150" dur="5s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 扫描线 -->
+  <rect x="-30" y="0" width="50" height="240" fill="#00f2fe" opacity="0.07">
+    <animate attributeName="x" values="-50;1000;-50" dur="10s" repeatCount="indefinite"/>
+  </rect>
+
+  <!-- 上升粒子 -->
+  <g fill="#6bcbff">
+    <circle cx="80" cy="220" r="2"><animate attributeName="cy" values="250;-10" dur="7s" repeatCount="indefinite"/></circle>
+    <circle cx="180" cy="220" r="1.6" opacity="0.8"><animate attributeName="cy" values="250;-10" dur="9s" begin="1s" repeatCount="indefinite"/></circle>
+    <circle cx="300" cy="220" r="2.2"><animate attributeName="cy" values="250;-10" dur="8s" begin="2s" repeatCount="indefinite"/></circle>
+    <circle cx="420" cy="220" r="1.5" opacity="0.7"><animate attributeName="cy" values="250;-10" dur="11s" begin="0.5s" repeatCount="indefinite"/></circle>
+    <circle cx="560" cy="220" r="2"><animate attributeName="cy" values="250;-10" dur="7.5s" begin="3s" repeatCount="indefinite"/></circle>
+    <circle cx="680" cy="220" r="1.8" opacity="0.8"><animate attributeName="cy" values="250;-10" dur="9.5s" begin="1.5s" repeatCount="indefinite"/></circle>
+    <circle cx="800" cy="220" r="2.2"><animate attributeName="cy" values="250;-10" dur="8.5s" begin="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="920" cy="220" r="1.6" opacity="0.7"><animate attributeName="cy" values="250;-10" dur="10s" begin="0.8s" repeatCount="indefinite"/></circle>
+    <circle cx="140" cy="220" r="1.2" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="12s" begin="4s" repeatCount="indefinite"/></circle>
+    <circle cx="360" cy="220" r="1.4" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="13s" begin="2.2s" repeatCount="indefinite"/></circle>
+    <circle cx="640" cy="220" r="1.2" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="11.5s" begin="3.5s" repeatCount="indefinite"/></circle>
+    <circle cx="860" cy="220" r="1.4" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="12.5s" begin="1.2s" repeatCount="indefinite"/></circle>
+  </g>
+
+  <!-- 霓虹标题 -->
+  <text x="500" y="118" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="62" font-weight="700" fill="url(#neon)" letter-spacing="8">ZHISHULO</text>
+  <text x="500" y="156" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#a9c1ff" letter-spacing="5" opacity="0.95">AI RESEARCHER · DEVELOPER · ANIME LOVER</text>
+</svg>
