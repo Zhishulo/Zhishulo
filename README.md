@@ -6,7 +6,7 @@
     assets/projects/shisikelang-cover.webp  → Galgame 封面
     assets/projects/bunopet-cover.jpg       → 智能体封面
     assets/projects/bilstm-cover.png        → AI 项目架构图
-    仅剩可选项：assets/projects/cyber-symphony-cover.svg（音乐厅封面）
+    assets/neon-alley.gif                   → 赛博小巷像素动画（4 秒循环）
   "签到蛇"由 GitHub Action 每天自动生成（连续打卡天数越多蛇越长）。
 ================================================================ -->
 
@@ -167,18 +167,15 @@
 
 <br>
 
-<!-- ===================== Cyber Symphony 音乐厅 ===================== -->
+<!-- ===================== 赛博小巷 · 像素动画 ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2 style="color:#ff2fd6;text-shadow:0 0 14px rgba(255,47,214,.6);letter-spacing:3px;">🎹 Cyber Symphony &nbsp;|&nbsp; 音乐厅</h2>
+  <h2 style="color:#00f0ff;text-shadow:0 0 14px rgba(0,240,255,.6);letter-spacing:3px;">🌧️ 赛博小巷 &nbsp;|&nbsp; Neon Alley</h2>
 
-  <!-- TODO: 将 assets/projects/cyber-symphony-cover.svg 替换为音乐厅封面（可选） -->
-  <a href="https://zhishulo.github.io/Zhishulo/">
-    <img src="assets/projects/cyber-symphony-cover.svg" width="640" alt="Cyber Symphony 音乐厅">
-  </a>
+  <img src="assets/neon-alley.gif" width="100%" alt="Neon Alley —— 雨夜霓虹小巷中孤独前行的赛博武士（4 秒无缝循环像素动画）">
   <p>
-    蓝紫赛博朋克 × 像素天气 × 经典乐章 —— 自作曲《星雨协奏曲》自动演奏，进度可视化<br>
-    点击封面 <b>直达音乐厅</b>（GitHub Pages 直出，无需跳转）
+    雨夜 · 霓虹 · 孤独的赛博武士 —— 像素动画，4 秒无缝循环<br>
+    <sub>由 <code>scripts/make_neon_alley.py</code> 纯代码逐像素绘制</sub>
   </p>
 </div>
 
