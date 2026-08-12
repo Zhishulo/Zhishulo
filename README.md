@@ -7,7 +7,7 @@
     assets/projects/bunopet-cover.jpg       → 智能体封面
     assets/projects/bilstm-cover.png        → AI 项目架构图
     assets/neon-city.gif                    → 霓虹都市像素动画（4.5 秒循环）
-  "签到蛇"由 GitHub Action 每天自动生成（连续打卡天数越多蛇越长）。
+  "贪吃蛇"由 Platane/snk 自动生成（跟随 GitHub 贡献图，每 12 小时更新，支持暗黑模式）。
 ================================================================ -->
 
 <!-- ===================== 顶部动态横幅 ===================== -->
@@ -198,14 +198,18 @@
 
 <br>
 
-<!-- ===================== 签到蛇（每天自动更新） ===================== -->
+<!-- ===================== 贪吃蛇（GitHub 贡献图动画） ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2 style="color:#7ae582;text-shadow:0 0 14px rgba(122,229,130,.55);letter-spacing:3px;">🐍 签到蛇 &nbsp;|&nbsp; Daily Check-in</h2>
+  <h2 style="color:#7ae582;text-shadow:0 0 14px rgba(122,229,130,.55);letter-spacing:3px;">🐍 贪吃蛇 &nbsp;|&nbsp; Contribution Snake</h2>
 
-  <!-- 由 .github/workflows/checkin-snake.yml 每天自动生成到 output 分支 -->
-  <img src="https://raw.githubusercontent.com/Zhishulo/Zhishulo/output/checkin-snake.svg" width="90%" alt="Daily Check-in Snake">
-  <p><i>每天坚持签到，签到蛇就会越来越长 ✨</i></p>
+  <!-- 由 .github/workflows/checkin-snake.yml 每 12 小时生成到 output 分支；picture 标签自动适配暗黑模式 -->
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/Zhishulo/Zhishulo/output/github-snake-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Zhishulo/Zhishulo/output/github-snake.svg">
+    <img alt="github-snake" src="https://raw.githubusercontent.com/Zhishulo/Zhishulo/output/github-snake.svg" width="90%">
+  </picture>
+  <p><i>我的 GitHub 贡献图化作贪吃蛇，每 12 小时更新 ✨</i></p>
 </div>
 
 <br>

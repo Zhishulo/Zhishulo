@@ -15,7 +15,7 @@ Neon City —— 高精度赛博朋克城市像素动画生成器
 用法:
     python make_neon_city.py
 输出:
-    assets/neon-city.gif        (成品，960x540)
+    assets/neon-city.gif        (成品，1344x756)
     dist/neon-city-preview.png  (预览网格)
 """
 
@@ -24,11 +24,11 @@ from PIL import Image
 import os
 
 # ----------------------------------------------------------------------------
-# 基本参数（基准画布 192x108，放大 5 倍 -> 960x540）
+# 基本参数（基准画布 192x108，放大 7 倍 -> 1344x756）
 # 54 帧 @ 12fps = 4.5 秒无缝循环
 # ----------------------------------------------------------------------------
 W, H = 192, 108
-SCALE = 5
+SCALE = 7
 FRAMES = 54
 FPS = 12
 GROUND = 74          # 路面起始行
@@ -613,11 +613,11 @@ def draw_holo_ui(img, t):
 
 
 def draw_rain(img, t):
-    """三层雨 + 穿过彩色灯光被染色的雨 + 落地水花"""
+    """三层稀疏雨 + 穿过彩色灯光被染色的雨 + 落地水花"""
     layers = [
-        (4, 2, 3, RAIN_FAR, 0.75),
-        (3, 4, 5, RAIN_MID, 0.9),
-        (2, 6, 7, RAIN_NEAR, 1.0),
+        (6, 2, 3, RAIN_FAR, 0.75),
+        (5, 4, 5, RAIN_MID, 0.9),
+        (4, 6, 6, RAIN_NEAR, 1.0),
     ]
     for step, dy, length, col, br in layers:
         for x in range(0, W, step):
@@ -631,17 +631,17 @@ def draw_rain(img, t):
                 c = RAIN_CYAN if br > 0.85 else blend(RAIN_CYAN, col, 0.55)
             if y >= GROUND - 1:
                 if y < GROUND + 6:
-                    bright = SPLASH if (t + x) % 3 == 0 else SPLASH_DIM
+                    bright = SPLASH if (t + x) % 5 == 0 else SPLASH_DIM
                     img[GROUND, x:x + 2] = bright
-                    if (t + x) % 4 == 0 and x + 3 < W:
+                    if (t + x) % 7 == 0 and x + 3 < W:
                         img[GROUND + 1, x + 2] = SPLASH_DIM
-                    if (t + x) % 5 == 0 and x - 2 >= 0:
+                    if (t + x) % 8 == 0 and x - 2 >= 0:
                         img[GROUND + 1, x - 2] = SPLASH_DIM
                 continue
             sway = int(np.sin(2 * np.pi * (t / FRAMES + (x % 9) / 9.0)) * 1.2)
             xx = min(max(x + sway, 0), W - 1)
             img[y:y + length, xx] = c
-            if step == 2 and x % 6 == 0:
+            if step == 4 and x % 8 == 0:
                 xx2 = min(max(x + sway + 1, 0), W - 1)
                 img[y, xx2] = blend(c, SPLASH, 0.6)
 
