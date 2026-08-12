@@ -3,32 +3,1184 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zhishulo · Cyber Symphony</title>
+<title>CYBER SYMPHONY · 星雨协奏曲</title>
 <style>
-  body{
-    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
-    background:radial-gradient(900px 500px at 50% -10%, #1b0f3d 0%, #07030f 60%, #03010a 100%);
-    color:#e8e6ff; font-family:"Consolas","Courier New",monospace; text-align:center;
-  }
-  .box{padding:32px}
-  h1{font-size:22px; letter-spacing:4px; margin:0 0 10px;
-     background:linear-gradient(90deg,#00f0ff,#a855f7,#ff2fd6,#00f0ff);
-     background-size:280% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
-     animation:g 7s linear infinite}
-  @keyframes g{to{background-position:280% 0}}
-  p{color:#9d95c9; font-size:13px; letter-spacing:2px}
-  a{display:inline-block; margin-top:18px; padding:12px 30px; color:#fff; text-decoration:none;
-    border:1px solid #00f0ff; background:linear-gradient(90deg, rgba(0,240,255,.18), rgba(168,85,247,.25));
-    box-shadow:0 0 12px rgba(0,240,255,.6); letter-spacing:3px;
-    clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%)}
+:root{
+  --bg0:#07030f; --bg1:#0d0620; --bg2:#140a2e;
+  --cyan:#00f0ff; --purple:#a855f7; --violet:#7b2ff7; --magenta:#ff2fd6;
+  --text:#e8e6ff; --dim:#9d95c9; --dim2:#6f66a3;
+  --neon-cyan:0 0 8px rgba(0,240,255,.75), 0 0 22px rgba(0,240,255,.35);
+  --neon-purple:0 0 8px rgba(168,85,247,.8), 0 0 24px rgba(123,47,247,.4);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+body{
+  background:radial-gradient(1200px 700px at 50% -10%, #1b0f3d 0%, var(--bg0) 55%, #03010a 100%);
+  color:var(--text);
+  font-family:"Consolas","Cascadia Mono","Courier New",monospace;
+  overflow-x:hidden;
+  min-height:100vh;
+  -webkit-tap-highlight-color:transparent;
+}
+/* ---------- 全局背景特效 ---------- */
+.grid-floor{
+  position:fixed; left:0; right:0; bottom:0; height:42vh; pointer-events:none;
+  background:
+    linear-gradient(rgba(123,47,247,.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,47,247,.22) 1px, transparent 1px),
+    linear-gradient(rgba(123,47,247,.16) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(123,47,247,.16) 1px, transparent 1px);
+  background-size:120px 120px,120px 120px,24px 24px,24px 24px;
+  transform:perspective(460px) rotateX(62deg) scale(1.6);
+  transform-origin:50% 0%;
+  -webkit-mask-image:linear-gradient(to top, rgba(0,0,0,.9), transparent 85%);
+  mask-image:linear-gradient(to top, rgba(0,0,0,.9), transparent 85%);
+  animation:gridmove 2.4s linear infinite;
+  opacity:.5;
+}
+@keyframes gridmove{from{background-position:0 0,0 0,0 0,0 0}to{background-position:0 120px,0 120px,0 24px,0 24px}}
+.stars{
+  position:fixed; inset:0; pointer-events:none; z-index:0;
+  background-image:
+    radial-gradient(1.2px 1.2px at 20% 18%, rgba(255,255,255,.8), transparent 60%),
+    radial-gradient(1px 1px at 70% 30%, rgba(0,240,255,.9), transparent 60%),
+    radial-gradient(1.4px 1.4px at 44% 62%, rgba(255,255,255,.7), transparent 60%),
+    radial-gradient(1px 1px at 82% 70%, rgba(168,85,247,.9), transparent 60%),
+    radial-gradient(1.2px 1.2px at 12% 78%, rgba(255,255,255,.6), transparent 60%),
+    radial-gradient(1px 1px at 56% 12%, rgba(0,240,255,.7), transparent 60%),
+    radial-gradient(1.1px 1.1px at 90% 44%, rgba(255,255,255,.7), transparent 60%),
+    radial-gradient(1px 1px at 32% 40%, rgba(255,45,214,.65), transparent 60%);
+  animation:twinkle 5s ease-in-out infinite alternate;
+}
+@keyframes twinkle{from{opacity:.55}to{opacity:1}}
+.scanlines{
+  position:fixed; inset:0; pointer-events:none; z-index:50; opacity:.16;
+  background:repeating-linear-gradient(to bottom, rgba(0,0,0,0) 0 2px, rgba(0,0,0,.45) 2px 4px);
+  mix-blend-mode:overlay;
+}
+.vignette{
+  position:fixed; inset:0; pointer-events:none; z-index:49;
+  background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%);
+}
+/* ---------- HUD ---------- */
+.hud{
+  position:relative; z-index:5;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:12px 20px; margin:14px 18px 0;
+  background:linear-gradient(90deg, rgba(20,10,46,.92), rgba(10,5,28,.88) 50%, rgba(20,10,46,.92));
+  border:1px solid rgba(168,85,247,.55);
+  box-shadow:var(--neon-purple), inset 0 0 26px rgba(123,47,247,.12);
+  clip-path:polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  animation:hudpulse 4s ease-in-out infinite;
+}
+@keyframes hudpulse{0%,100%{box-shadow:var(--neon-purple)}50%{box-shadow:0 0 14px rgba(0,240,255,.7),0 0 34px rgba(123,47,247,.5)}}
+.hud .tag{color:var(--cyan); letter-spacing:3px; font-size:13px; text-shadow:var(--neon-cyan)}
+.hud .tag b{color:var(--magenta)}
+.hud-title{
+  font-size:17px; letter-spacing:4px; text-align:center;
+  background:linear-gradient(90deg, var(--cyan), var(--purple), var(--magenta), var(--cyan));
+  background-size:280% 100%;
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  animation:gradslide 7s linear infinite;
+  text-shadow:0 0 18px rgba(168,85,247,.35);
+}
+@keyframes gradslide{to{background-position:280% 0}}
+.hud-clock{color:var(--dim); font-size:14px; letter-spacing:2px; text-align:right}
+.hud-clock span{color:var(--cyan)}
+/* ---------- 面板 ---------- */
+.panels{
+  position:relative; z-index:5;
+  display:grid; grid-template-columns:minmax(420px,1fr) minmax(460px,1.15fr);
+  gap:18px; padding:18px; max-width:1500px; margin:0 auto;
+}
+@media (max-width:1000px){.panels{grid-template-columns:1fr}}
+.panel{
+  position:relative;
+  background:linear-gradient(160deg, rgba(24,12,52,.9), rgba(8,4,22,.94));
+  border:1px solid rgba(0,240,255,.35);
+  box-shadow:var(--neon-cyan), inset 0 0 40px rgba(123,47,247,.10);
+  clip-path:polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+  padding:16px 16px 14px;
+  animation:panelglow 5s ease-in-out infinite;
+}
+@keyframes panelglow{0%,100%{box-shadow:var(--neon-cyan)}50%{box-shadow:0 0 16px rgba(168,85,247,.75),0 0 40px rgba(0,240,255,.3)}}
+.panel-title{
+  display:flex; align-items:center; gap:8px;
+  font-size:13px; letter-spacing:4px; color:var(--cyan);
+  margin-bottom:10px; text-shadow:var(--neon-cyan);
+}
+.panel-title::before{content:"▮"; color:var(--magenta); text-shadow:0 0 8px var(--magenta)}
+.panel-title .sub{color:var(--dim2); letter-spacing:1px; font-size:11px; margin-left:auto}
+/* ---------- 天气面板 ---------- */
+.weather-wrap{position:relative; border:1px solid rgba(168,85,247,.35); background:#05030c; overflow:hidden}
+canvas#weather{display:block; width:100%; aspect-ratio:4/3; image-rendering:pixelated}
+.weather-status{
+  margin-top:8px; font-size:12px; color:var(--dim); letter-spacing:1px; min-height:16px;
+}
+.weather-status b{color:var(--cyan)}
+.weather-controls{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px}
+.wbtn{
+  flex:1; min-width:82px; padding:8px 6px; cursor:pointer;
+  background:rgba(20,10,46,.85); color:var(--text);
+  border:1px solid rgba(168,85,247,.6);
+  font-family:inherit; font-size:13px; letter-spacing:1px;
+  clip-path:polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 0 100%);
+  transition:all .2s;
+}
+.wbtn:hover{color:#0ff; border-color:var(--cyan); box-shadow:var(--neon-cyan); transform:translateY(-1px)}
+.wbtn.active{background:linear-gradient(90deg, rgba(0,240,255,.25), rgba(168,85,247,.35)); color:#fff; box-shadow:var(--neon-cyan); border-color:var(--cyan)}
+.wbtn,.cbtn{touch-action:manipulation}
+@media (hover:none){.cbtn:hover,.wbtn:hover{transform:none}}
+/* ---------- 音乐面板 ---------- */
+.score-wrap{border:1px solid rgba(0,240,255,.3); background:#05030c; overflow:hidden}
+canvas#score{display:block; width:100%; height:190px; image-rendering:auto}
+.timeline{margin-top:12px}
+.timeline-track{
+  position:relative; height:34px; border:1px solid rgba(168,85,247,.5);
+  background:linear-gradient(90deg, rgba(20,10,46,.9), rgba(8,4,22,.9));
+  overflow:hidden;
+}
+.tl-section{position:absolute; top:0; bottom:0; border-right:1px solid rgba(255,255,255,.14); overflow:hidden}
+.tl-section .tl-label{
+  position:absolute; left:4px; top:3px; font-size:10px; color:rgba(255,255,255,.82);
+  white-space:nowrap; letter-spacing:1px; text-shadow:0 0 6px rgba(0,0,0,.9);
+}
+.playhead{
+  position:absolute; top:-4px; bottom:-4px; width:2px; background:var(--magenta);
+  box-shadow:0 0 10px var(--magenta), 0 0 22px var(--magenta);
+}
+.playhead::after{
+  content:""; position:absolute; top:-3px; left:-4px;
+  border:5px solid transparent; border-top:7px solid var(--magenta);
+}
+.timeline-meta{display:flex; justify-content:space-between; margin-top:5px; font-size:12px; color:var(--dim)}
+.timeline-meta b{color:var(--cyan)}
+.music-controls{display:flex; align-items:center; flex-wrap:wrap; gap:10px; margin-top:10px}
+.cbtn{
+  padding:9px 20px; cursor:pointer; font-family:inherit; font-size:14px; letter-spacing:2px;
+  background:linear-gradient(90deg, rgba(0,240,255,.18), rgba(168,85,247,.22));
+  color:#fff; border:1px solid var(--cyan);
+  clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%);
+  box-shadow:var(--neon-cyan);
+  transition:all .18s;
+}
+.cbtn:hover{transform:translateY(-2px); box-shadow:0 0 16px rgba(0,240,255,.9), 0 0 34px rgba(168,85,247,.5)}
+.cbtn:active{transform:translateY(0)}
+.cbtn.stop{background:linear-gradient(90deg, rgba(255,47,214,.2), rgba(123,47,247,.3)); border-color:var(--magenta); box-shadow:0 0 10px rgba(255,47,214,.6)}
+.vol{display:flex; align-items:center; gap:8px; font-size:12px; color:var(--dim)}
+.vol input{accent-color:var(--cyan); width:110px}
+.section-badge{
+  margin-left:auto; font-size:13px; letter-spacing:2px; color:var(--magenta);
+  text-shadow:0 0 10px rgba(255,47,214,.7);
+  border:1px dashed rgba(255,47,214,.55); padding:4px 10px;
+}
+canvas#viz{display:block; width:100%; height:56px; margin-top:10px; border:1px solid rgba(168,85,247,.3); background:#05030c}
+.foot{
+  position:relative; z-index:5; text-align:center; padding:10px 18px 30px;
+  font-size:11px; color:var(--dim2); letter-spacing:2px;
+}
+.foot b{color:var(--cyan)}
+.foot .heart{color:var(--magenta); text-shadow:0 0 8px var(--magenta)}
+/* 闪烁光标 */
+.cursor-blink{display:inline-block; width:9px; height:14px; background:var(--cyan); vertical-align:middle; margin-left:2px; animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* ---------- 移动端适配（手机 / 小屏） ---------- */
+@media (max-width:760px){
+  .hud{flex-wrap:wrap; justify-content:center; text-align:center; gap:6px; padding:10px 12px; margin:10px 10px 0}
+  .hud .tag{font-size:11px; letter-spacing:2px}
+  .hud-title{font-size:13px; letter-spacing:2px; width:100%; order:3; margin-top:4px; line-height:1.5}
+  .hud-clock{font-size:11px}
+  .panels{padding:10px; gap:12px}
+  .panel{padding:12px 10px 10px; clip-path:polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))}
+  .panel-title{font-size:11px; letter-spacing:2px}
+  .wbtn{min-width:calc(33% - 8px); flex:1 1 auto; font-size:12px; padding:7px 4px}
+  canvas#score{height:150px}
+  .timeline-track{height:30px}
+  .tl-section .tl-label{font-size:8px; letter-spacing:0}
+  .timeline-meta{font-size:11px; flex-wrap:wrap; gap:4px}
+  .music-controls{gap:8px}
+  .cbtn{padding:8px 14px; font-size:13px}
+  .section-badge{font-size:11px; padding:3px 8px; margin-left:0}
+  .vol{font-size:11px}
+  .vol input{width:76px}
+  canvas#viz{height:44px}
+  .foot{font-size:10px; padding:8px 10px 22px}
+}
+@media (max-width:400px){
+  .wbtn{min-width:calc(50% - 8px)}
+  .hud-title{font-size:12px}
+  canvas#score{height:132px}
+}
 </style>
 </head>
 <body>
-  <div class="box">
-    <h1>CYBER SYMPHONY</h1>
-    <p>像素天气 × 经典乐章 · 自动化演奏</p>
-    <a href="cyber-symphony/">🎧 进入音乐厅</a>
-  </div>
-  <script>location.replace("cyber-symphony/");</script>
+<div class="stars"></div>
+<div class="grid-floor"></div>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<header class="hud">
+  <div class="tag">CYBER<b>//</b>SYMPHONY <span style="color:var(--dim2)">v2.077</span></div>
+  <div class="hud-title">《星雨协奏曲 · STARLIGHT RAIN CONCERTO》</div>
+  <div class="hud-clock"><span id="clock">00:00:00</span><br>ZHS // SYS.ONLINE</div>
+</header>
+
+<main class="panels">
+  <!-- 天气面板 -->
+  <section class="panel">
+    <div class="panel-title">WEATHER<span class="sub">// 像素天气模拟</span></div>
+    <div class="weather-wrap">
+      <canvas id="weather"></canvas>
+    </div>
+    <div class="weather-status" id="weather-status">系统自检中…<span class="cursor-blink"></span></div>
+    <div class="weather-controls">
+      <button class="wbtn active" data-weather="sunny">☀ 晴</button>
+      <button class="wbtn" data-weather="rain">🌧 雨</button>
+      <button class="wbtn" data-weather="snow">❄ 雪</button>
+      <button class="wbtn" data-weather="thunder">⛈ 雷暴</button>
+      <button class="wbtn" data-weather="rainbow">🌈 虹</button>
+      <button class="wbtn" data-weather="night">🌙 夜</button>
+    </div>
+  </section>
+
+  <!-- 音乐面板 -->
+  <section class="panel">
+    <div class="panel-title">MUSIC<span class="sub">// 经典乐章 · 自动化演奏</span></div>
+    <div class="score-wrap"><canvas id="score"></canvas></div>
+    <div class="timeline">
+      <div class="timeline-track" id="timeline-track"></div>
+      <div class="timeline-meta">
+        <span><b id="t-cur">00:00</b> / <span id="t-total">00:00</span></span>
+        <span id="t-section">序曲</span>
+      </div>
+    </div>
+    <div class="music-controls">
+      <button class="cbtn" id="btn-play">▶ 演奏</button>
+      <button class="cbtn stop" id="btn-stop">■ 停止</button>
+      <label class="vol">音量 <input type="range" id="volume" min="0" max="1" step="0.05" value="0.8"></label>
+      <span class="section-badge" id="section-badge">◆ 序曲</span>
+    </div>
+    <canvas id="viz"></canvas>
+  </section>
+</main>
+
+<footer class="foot">
+  蓝紫赛博朋克 × 像素天气 × 经典乐章 &nbsp;·&nbsp; 算法作曲灵感来自 <b>STRUDEL</b>（Tidal 模式语言）&nbsp;·&nbsp; <span class="heart">♥</span> 献给热爱音乐与代码的你
+</footer>
+
+<script>
+"use strict";
+/* ================================================================
+   工具函数
+================================================================ */
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const midiHz = (m) => 440 * Math.pow(2, (m - 69) / 12);
+const pad2 = (n) => String(n).padStart(2, "0");
+const fmt = (s) => pad2(Math.floor(s / 60)) + ":" + pad2(Math.floor(s % 60));
+const rnd = (a, b) => a + Math.random() * (b - a);
+
+/* ================================================================
+   时钟
+================================================================ */
+setInterval(() => {
+  const d = new Date();
+  $("clock").textContent = pad2(d.getHours()) + ":" + pad2(d.getMinutes()) + ":" + pad2(d.getSeconds());
+}, 1000);
+
+/* ================================================================
+   音频引擎（Web Audio 合成）
+================================================================ */
+let AC = null, masterGain = null, comp = null, reverb = null, wetGain = null;
+let audioReady = false;
+
+function makeImpulse(ctx, seconds, decay) {
+  const rate = ctx.sampleRate, len = Math.floor(rate * seconds);
+  const buf = ctx.createBuffer(2, len, rate);
+  for (let ch = 0; ch < 2; ch++) {
+    const data = buf.getChannelData(ch);
+    for (let i = 0; i < len; i++) {
+      data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+    }
+  }
+  return buf;
+}
+
+function initAudio() {
+  if (audioReady) return;
+  AC = new (window.AudioContext || window.webkitAudioContext)();
+  comp = AC.createDynamicsCompressor();
+  comp.threshold.value = -18; comp.knee.value = 22; comp.ratio.value = 9;
+  comp.attack.value = 0.004; comp.release.value = 0.24;
+  masterGain = AC.createGain();
+  masterGain.gain.value = parseFloat($("volume").value) || 0.8;
+  masterGain.connect(comp);
+  comp.connect(AC.destination);
+  reverb = AC.createConvolver();
+  reverb.buffer = makeImpulse(AC, 2.4, 3.2);
+  wetGain = AC.createGain();
+  wetGain.gain.value = 0.32;
+  reverb.connect(wetGain);
+  wetGain.connect(masterGain);
+  audioReady = true;
+}
+
+function route(src, wet) {
+  src.connect(masterGain);
+  if (wet > 0) {
+    const g = AC.createGain();
+    g.gain.value = wet;
+    src.connect(g);
+    g.connect(reverb);
+  }
+}
+
+/* ---- 乐器合成器 ---- */
+const INSTR = {
+  piano(freq, t, dur, vel) {
+    const oscs = [AC.createOscillator(), AC.createOscillator(), AC.createOscillator()];
+    oscs[0].type = "sine"; oscs[0].frequency.value = freq;
+    oscs[1].type = "sine"; oscs[1].frequency.value = freq * 2;
+    oscs[2].type = "triangle"; oscs[2].frequency.value = freq * 0.5;
+    const g = AC.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vel * 0.32, t + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.001, t + Math.max(0.35, dur * 1.1));
+    const lp = AC.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 5200;
+    oscs.forEach(o => { o.connect(lp); o.start(t); o.stop(t + dur * 1.2 + 0.4); });
+    lp.connect(g); route(g, 0.18);
+  },
+  strings(freq, t, dur, vel) {
+    const oscs = [AC.createOscillator(), AC.createOscillator(), AC.createOscillator()];
+    oscs[0].type = "sawtooth"; oscs[0].frequency.value = freq;
+    oscs[1].type = "sawtooth"; oscs[1].frequency.value = freq * 1.0035;
+    oscs[2].type = "sawtooth"; oscs[2].frequency.value = freq * 0.997;
+    const g = AC.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vel * 0.16, t + Math.min(0.5, dur * 0.4));
+    g.gain.setValueAtTime(vel * 0.16, t + Math.max(0.5, dur * 0.7));
+    g.gain.linearRampToValueAtTime(0.001, t + dur + 0.5);
+    const lp = AC.createBiquadFilter(); lp.type = "lowpass";
+    lp.frequency.setValueAtTime(2600, t); lp.frequency.exponentialRampToValueAtTime(900, t + dur);
+    lp.Q.value = 0.7;
+    oscs.forEach(o => { o.connect(lp); o.start(t); o.stop(t + dur + 0.8); });
+    lp.connect(g); route(g, 0.4);
+  },
+  harp(freq, t, dur, vel) {
+    const oscs = [AC.createOscillator(), AC.createOscillator()];
+    oscs[0].type = "triangle"; oscs[0].frequency.value = freq;
+    oscs[1].type = "sine"; oscs[1].frequency.value = freq * 2.01;
+    const g = AC.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vel * 0.26, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(0.001, t + Math.max(0.8, dur));
+    const hp = AC.createBiquadFilter(); hp.type = "highpass"; hp.frequency.value = 220;
+    oscs.forEach(o => { o.connect(hp); o.start(t); o.stop(t + dur + 0.4); });
+    hp.connect(g); route(g, 0.35);
+  },
+  bell(freq, t, dur, vel) {
+    const parts = [1, 2.76, 5.4].map((m, i) => {
+      const o = AC.createOscillator();
+      o.type = "sine"; o.frequency.value = freq * m;
+      return { o, amp: [0.55, 0.2, 0.08][i] };
+    });
+    const g = AC.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vel * 0.22, t + 0.004);
+    g.gain.exponentialRampToValueAtTime(0.001, t + Math.max(1.2, dur * 2.2));
+    parts.forEach(p => { p.o.connect(g); p.o.start(t); p.o.stop(t + dur * 2.4 + 1.5); });
+    route(g, 0.5);
+  },
+  bass(freq, t, dur, vel) {
+    const o = AC.createOscillator(); o.type = "sine"; o.frequency.value = freq;
+    const o2 = AC.createOscillator(); o2.type = "triangle"; o2.frequency.value = freq * 2;
+    const g = AC.createGain();
+    g.gain.setValueAtTime(0, t);
+    g.gain.linearRampToValueAtTime(vel * 0.4, t + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, t + Math.max(0.5, dur * 1.05));
+    const lp = AC.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 520;
+    [o, o2].forEach(x => { x.connect(lp); x.start(t); x.stop(t + dur + 0.5); });
+    lp.connect(g); route(g, 0.08);
+  }
+};
+
+/* ================================================================
+   乐章结构（经典风格 · 自作曲）
+   六段式：序曲 → 主题·晨光 → 发展·云涌 → 柔板·夜雪 → 终曲·星雨 → 尾声
+================================================================ */
+const SECTIONS = [
+  { name: "序曲",        weather: "sunny",   tempo: 88,  beats: 16, color: "#00f0ff" },
+  { name: "主题·晨光",   weather: "sunny",   tempo: 96,  beats: 44, color: "#4facfe" },
+  { name: "发展·云涌",   weather: "thunder", tempo: 108, beats: 34, color: "#a855f7" },
+  { name: "柔板·夜雪",   weather: "snow",    tempo: 58,  beats: 44, color: "#7b2ff7" },
+  { name: "终曲·星雨",   weather: "rainbow", tempo: 100, beats: 50, color: "#ff2fd6" },
+  { name: "尾声",        weather: "night",   tempo: 72,  beats: 12, color: "#6f66a3" }
+];
+let sOff = 0;
+SECTIONS.forEach(s => { s.startSec = sOff; s.secs = (s.beats / s.tempo) * 60; sOff += s.secs; });
+const TOTAL_SECS = sOff;
+const P = { C3:48,D3:50,E3:52,F3:53,G3:55,A3:57,B3:59,C4:60,D4:62,E4:64,F4:65,G4:67,A4:69,B4:71,C5:72,D5:74,E5:76,F5:77,G5:79,A5:81,B5:83,C6:84,E6:88,G6:91 };
+
+function buildPiece() {
+  const all = []; // {sec, dur, midi, instr, vel, section}
+  const add = (si, list) => {
+    const sec = SECTIONS[si], beatSec = 60 / sec.tempo;
+    list.forEach(n => all.push({
+      sec: sec.startSec + n[0] * beatSec,
+      dur: n[2] * beatSec,
+      midi: n[1], instr: n[3], vel: n[4], section: si
+    }));
+  };
+  const V = { pp: 0.5, mp: 0.66, mf: 0.8, f: 0.95, ff: 1.0 };
+
+  /* ---- 第 0 段：序曲（竖琴琶音 + 铃铛 + 弦乐垫） ---- */
+  const arp = [P.C4, P.E4, P.G4, P.C5, P.E5, P.G5, P.C6, P.G5, P.E5, P.C5, P.G4, P.E4];
+  const harpNotes = [], bellNotes = [], pad0 = [], bass0 = [];
+  for (let b = 0; b < 16; b += 0.5) {
+    const idx = Math.floor(b) % arp.length;
+    harpNotes.push([b, arp[idx], 0.9, "harp", V.mp * (0.7 + (Math.floor(b) % 4) * 0.08)]);
+  }
+  [[0, P.E5, 1.2], [4, P.G5, 1.2], [8, P.A5, 1.2], [12, P.G5, 2]].forEach(n =>
+    bellNotes.push([n[0], n[1], n[2], "bell", V.mf]));
+  [[0, P.C3, 4], [0, P.E3, 4], [0, P.G3, 4], [8, P.A2, 4], [8, P.C3, 4], [8, P.E3, 4]].forEach(n =>
+    pad0.push([n[0], n[1], n[2], "strings", V.pp]));
+  [[0, P.C2, 2], [2, P.G2, 2], [4, P.C2, 2], [6, P.G2, 2], [8, P.A2, 2], [10, P.E2, 2], [12, P.F2, 2], [14, P.G2, 2]].forEach(n =>
+    bass0.push([n[0], n[1], n[2], "bass", V.mp]));
+  add(0, harpNotes); add(0, bellNotes); add(0, pad0); add(0, bass0);
+
+  /* ---- 第 1 段：主题·晨光（钢琴主旋律 + 低音 + 弦乐 + 竖琴） ---- */
+  const melody1 = [
+    [0, P.E4, 1, V.mf], [1, P.G4, 0.5, V.mf], [1.5, P.A4, 0.5, V.mf], [2, P.G4, 1, V.mf], [3, P.E4, 1, V.mf],
+    [4, P.D4, 1, V.mf], [5, P.F4, 0.5, V.mf], [5.5, P.G4, 0.5, V.mf], [6, P.E4, 1.5, V.mf], [7.5, P.C4, 0.5, V.mf],
+    [8, P.D4, 1, V.mf], [9, P.E4, 0.5, V.mf], [9.5, P.G4, 0.5, V.mf], [10, P.C5, 1, V.ff], [11, P.G4, 1, V.mf],
+    [12, P.E4, 1, V.mf], [13, P.D4, 1, V.mf], [14, P.C4, 2, V.f],
+    [16, P.E4, 1, V.mf], [17, P.G4, 0.5, V.mf], [17.5, P.A4, 0.5, V.mf], [18, P.G4, 1, V.mf], [19, P.E4, 1, V.mf],
+    [20, P.F4, 1, V.mf], [21, P.A4, 0.5, V.mf], [21.5, P.C5, 0.5, V.mf], [22, P.A4, 1.5, V.mf], [23.5, P.F4, 0.5, V.mf],
+    [24, P.G4, 1, V.mf], [25, P.C5, 0.5, V.mf], [25.5, P.D5, 0.5, V.mf], [26, P.C5, 1, V.ff], [27, P.G4, 1, V.mf],
+    [28, P.E4, 1, V.mf], [29, P.C4, 1, V.mf], [30, P.D4, 1, V.mf], [31, P.G4, 1, V.mf], [32, P.C4, 2, V.ff],
+    [34, P.G4, 0.5, V.mf], [34.5, P.A4, 0.5, V.mf], [35, P.B4, 0.5, V.mf], [35.5, P.C5, 0.5, V.mf],
+    [36, P.D5, 1, V.f], [37, P.C5, 0.5, V.mf], [37.5, P.B4, 0.5, V.mf], [38, P.C5, 1, V.ff], [39, P.G4, 1, V.mf],
+    [40, P.E4, 1, V.mf], [41, P.D4, 1, V.mf], [42, P.C4, 2, V.ff]
+  ];
+  const piano1 = melody1.map(n => [n[0], n[1], n[2], "piano", n[3]]);
+  const bass1 = [];
+  const prog1 = [[P.C2, P.C3, P.E3, P.G3], [P.G2, P.G3, P.B3, P.D4], [P.A2, P.A3, P.C4, P.E4], [P.F2, P.F3, P.A3, P.C4]];
+  for (let b = 0; b < 44; b += 2) {
+    const ch = prog1[(b / 2) % 4];
+    bass1.push([b, ch[0], 1.8, "bass", V.mf]);
+  }
+  const str1 = [];
+  for (let b = 0; b < 44; b += 8) {
+    const ch = prog1[(b / 2) % 4];
+    str1.push([b, ch[1], 8, "strings", V.pp]);
+    str1.push([b, ch[2], 8, "strings", V.pp]);
+    str1.push([b, ch[3], 8, "strings", V.pp]);
+  }
+  const harp1 = [];
+  for (let b = 0; b < 44; b += 2) {
+    const ch = prog1[(b / 2) % 4];
+    harp1.push([b, ch[2] + 12, 1, "harp", V.pp]);
+  }
+  add(1, piano1); add(1, bass1); add(1, str1); add(1, harp1);
+
+  /* ---- 第 2 段：发展·云涌（A小调，弦乐主旋 + 钢琴琶音，渐强） ---- */
+  const mel2 = [
+    [0, P.A4, 1, V.mf], [1, P.C5, 1, V.mf], [2, P.B4, 1, V.mf], [3, P.A4, 1, V.mf],
+    [4, P.G4, 1, V.mf], [5, P.A4, 1, V.mf], [6, P.E4, 2, V.mf],
+    [8, P.A4, 1, V.f], [9, P.C5, 1, V.f], [10, P.D5, 1, V.f], [11, P.C5, 1, V.f],
+    [12, P.B4, 1, V.f], [13, P.G4, 1, V.f], [14, P.A4, 2, V.ff],
+    [16, P.E5, 1, V.ff], [17, P.D5, 1, V.ff], [18, P.C5, 1, V.ff], [19, P.B4, 1, V.f],
+    [20, P.A4, 1, V.f], [21, P.G4, 1, V.f], [22, P.A4, 2, V.ff],
+    [24, P.A4, 1, V.mf], [25, P.C5, 1, V.mf], [26, P.B4, 1, V.mf], [27, P.A4, 1, V.mf],
+    [28, P.G4, 1, V.mf], [29, P.A4, 1, V.mf], [30, P.E4, 2, V.mf], [32, P.E5, 2, V.ff]
+  ];
+  const str2 = mel2.map(n => [n[0], n[1], n[2], "strings", n[3] * 0.9]);
+  const piano2 = [], bass2 = [];
+  const prog2 = [[P.A2, P.A3, P.C4, P.E4], [P.F2, P.F3, P.A3, P.C4], [P.D2, P.D3, P.F3, P.A3], [P.E2, P.E3, P.G3, P.B3]];
+  for (let b = 0; b < 34; b += 0.5) {
+    const ch = prog2[Math.floor(b / 2) % 4];
+    const notes = [ch[1], ch[2], ch[3], ch[2] + 12];
+    piano2.push([b, notes[Math.floor(b) % 4], 0.45, "piano", V.mp * (1 + b / 34)]);
+  }
+  for (let b = 0; b < 34; b += 2) {
+    const ch = prog2[(b / 2) % 4];
+    bass2.push([b, ch[0], 1.8, "bass", V.f]);
+  }
+  add(2, str2); add(2, piano2); add(2, bass2);
+
+  /* ---- 第 3 段：柔板·夜雪（钢琴独奏 + 竖琴回声，A小调→F大调） ---- */
+  const mel3 = [
+    [0, P.A4, 2, V.mp], [2, P.C5, 1, V.mp], [3, P.B4, 1, V.mp], [4, P.A4, 2, V.mp], [6, P.G4, 1, V.mp], [7, P.A4, 1, V.mp],
+    [8, P.E4, 3, V.mp], [11, P.G4, 1, V.mp], [12, P.A4, 2, V.mp], [14, P.C5, 2, V.mf],
+    [16, P.D5, 2, V.mf], [18, P.C5, 2, V.mp], [20, P.A4, 2, V.mp], [22, P.G4, 2, V.mp],
+    [24, P.F4, 2, V.mf], [26, P.A4, 2, V.mf], [28, P.C5, 2, V.mf], [30, P.A4, 2, V.mp],
+    [32, P.G4, 1, V.mp], [33, P.F4, 1, V.mp], [34, P.E4, 2, V.mp], [36, P.D4, 2, V.mp],
+    [38, P.E4, 2, V.mf], [40, P.C4, 3, V.mf]
+  ];
+  const piano3 = mel3.map(n => [n[0], n[1], n[2], "piano", n[3]]);
+  const harp3 = [];
+  for (let b = 0; b < 44; b += 1) {
+    const base = [P.A3, P.E4, P.A4, P.C5, P.E5, P.C5, P.A4, P.E4];
+    harp3.push([b, base[(b + Math.floor(b / 2)) % base.length], 1.2, "harp", V.pp * 0.8]);
+  }
+  const pad3 = [];
+  [[0, P.A3, 16], [16, P.F3, 16], [32, P.C4, 12]].forEach(n => {
+    pad3.push([n[0], n[1], n[2], "strings", V.pp * 0.7]);
+    pad3.push([n[0], n[1] + 4, n[2], "strings", V.pp * 0.7]);
+  });
+  add(3, piano3); add(3, harp3); add(3, pad3);
+
+  /* ---- 第 4 段：终曲·星雨（主题回归，全编制，C大调） ---- */
+  const mel4 = [
+    [0, P.C4, 1, V.ff], [1, P.E4, 0.5, V.ff], [1.5, P.G4, 0.5, V.ff], [2, P.E4, 1, V.ff], [3, P.G4, 1, V.ff],
+    [4, P.A4, 1, V.ff], [5, P.G4, 1, V.ff], [6, P.E4, 1, V.f], [7, P.C4, 1, V.f],
+    [8, P.D4, 1, V.ff], [9, P.E4, 0.5, V.ff], [9.5, P.G4, 0.5, V.ff], [10, P.C5, 1, V.ff], [11, P.B4, 1, V.ff],
+    [12, P.G4, 1, V.ff], [13, P.E4, 1, V.ff], [14, P.D4, 1, V.ff], [15, P.C4, 1, V.ff],
+    [16, P.E4, 1, V.ff], [17, P.G4, 0.5, V.ff], [17.5, P.A4, 0.5, V.ff], [18, P.G4, 1, V.ff], [19, P.E4, 1, V.ff],
+    [20, P.D4, 1, V.ff], [21, P.F4, 0.5, V.ff], [21.5, P.G4, 0.5, V.ff], [22, P.E4, 1.5, V.ff], [23.5, P.C4, 0.5, V.ff],
+    [24, P.G4, 1, V.ff], [25, P.A4, 0.5, V.ff], [25.5, P.B4, 0.5, V.ff], [26, P.C5, 1, V.ff], [27, P.D5, 1, V.ff],
+    [28, P.C5, 1, V.ff], [29, P.G4, 1, V.ff], [30, P.E4, 1, V.ff], [31, P.D4, 1, V.ff],
+    [32, P.C4, 1, V.ff], [33, P.E4, 0.5, V.ff], [33.5, P.G4, 0.5, V.ff], [34, P.C5, 1, V.ff], [35, P.E5, 1, V.ff],
+    [36, P.G5, 1.5, V.ff], [37.5, P.E5, 0.5, V.ff], [38, P.C5, 1, V.ff], [39, P.G4, 1, V.ff],
+    [40, P.E4, 1, V.ff], [41, P.C4, 1, V.ff], [42, P.D4, 1, V.ff], [43, P.G4, 1, V.ff],
+    [44, P.C4, 1, V.ff], [45, P.E4, 1, V.ff], [46, P.G4, 1, V.ff], [47, P.C5, 1, V.ff], [48, P.E5, 2, V.ff]
+  ];
+  const piano4 = mel4.map(n => [n[0], n[1], n[2], "piano", n[3]]);
+  const bass4 = [], str4 = [], harp4 = [], bell4 = [];
+  const prog4 = [[P.C2, P.C3, P.E3, P.G3], [P.G2, P.G3, P.B3, P.D4], [P.A2, P.A3, P.C4, P.E4], [P.F2, P.F3, P.A3, P.C4]];
+  for (let b = 0; b < 50; b += 2) {
+    const ch = prog4[(b / 2) % 4];
+    bass4.push([b, ch[0], 1.8, "bass", V.f]);
+    harp4.push([b, ch[2] + 12, 1, "harp", V.mf]);
+  }
+  for (let b = 0; b < 50; b += 4) {
+    const ch = prog4[(b / 2) % 4];
+    str4.push([b, ch[1], 4, "strings", V.mp]);
+    str4.push([b, ch[2], 4, "strings", V.mp]);
+    str4.push([b, ch[3], 4, "strings", V.mp]);
+  }
+  [[40, P.G6, 2, V.f], [46, P.C6, 2, V.ff]].forEach(n => bell4.push([n[0], n[1], n[2], "bell", n[3]]));
+  add(4, piano4); add(4, bass4); add(4, str4); add(4, harp4); add(4, bell4);
+
+  /* ---- 第 5 段：尾声（C大调终止式） ---- */
+  const final5 = [
+    [0, P.C3, 8, "bass", V.f], [0, P.C4, 8, "strings", V.mf], [0, P.E4, 8, "strings", V.mf],
+    [0, P.G4, 8, "strings", V.mf], [0, P.C5, 8, "piano", V.mf], [0, P.E5, 8, "harp", V.mp],
+    [2, P.G5, 5, "bell", V.ff], [6, P.C6, 6, "bell", V.ff]
+  ];
+  add(5, final5);
+
+  all.sort((a, b) => a.sec - b.sec);
+  return all;
+}
+
+const EVENTS = buildPiece();
+
+/* ================================================================
+   播放控制
+================================================================ */
+let playing = false, startTime = 0, nextIdx = 0, schedTimer = null;
+let curSection = 0, lastSection = -1;
+const channelEnergy = { piano: 0, strings: 0, harp: 0, bell: 0, bass: 0 };
+
+function currentSec() {
+  if (!playing) return 0;
+  return AC.currentTime - startTime;
+}
+
+function scheduler() {
+  if (!playing) return;
+  const horizon = AC.currentTime + 0.35;
+  while (nextIdx < EVENTS.length && startTime + EVENTS[nextIdx].sec < horizon) {
+    const e = EVENTS[nextIdx++];
+    const t = startTime + e.sec;
+    INSTR[e.instr](midiHz(e.midi), t, e.dur, e.vel);
+    channelEnergy[e.instr] = Math.min(1.2, channelEnergy[e.instr] + e.vel * 0.35);
+  }
+}
+
+function startPlay() {
+  initAudio();
+  if (AC.state === "suspended") AC.resume();
+  if (playing) return;
+  playing = true;
+  startTime = AC.currentTime + 0.08;
+  nextIdx = 0;
+  schedTimer = setInterval(scheduler, 30);
+  $("btn-play").textContent = "⏸ 暂停";
+  $("weather-status").innerHTML = "演奏开始 · 声学引擎已就绪 <span class='cursor-blink'></span>";
+}
+
+function pausePlay() {
+  playing = false;
+  if (schedTimer) clearInterval(schedTimer);
+  schedTimer = null;
+  $("btn-play").textContent = "▶ 演奏";
+}
+
+function stopPlay() {
+  pausePlay();
+  if (AC) {
+    AC.suspend();
+  }
+  curSection = 0; lastSection = -1;
+  Object.keys(channelEnergy).forEach(k => channelEnergy[k] = 0);
+  $("weather-status").innerHTML = "系统待机 · 点击「演奏」开始 <span class='cursor-blink'></span>";
+}
+
+$("btn-play").addEventListener("click", () => { playing ? pausePlay() : startPlay(); });
+$("btn-stop").addEventListener("click", stopPlay);
+$("volume").addEventListener("input", (e) => {
+  if (masterGain) masterGain.gain.value = parseFloat(e.target.value);
+});
+
+/* ================================================================
+   进度可视化：时间线 + 钢琴卷帘 + 频谱
+================================================================ */
+const trackEl = $("timeline-track");
+SECTIONS.forEach((s, i) => {
+  const d = document.createElement("div");
+  d.className = "tl-section";
+  d.style.left = (s.startSec / TOTAL_SECS * 100) + "%";
+  d.style.width = (s.secs / TOTAL_SECS * 100) + "%";
+  d.style.background = `linear-gradient(180deg, ${s.color}22, transparent)`;
+  d.innerHTML = `<span class="tl-label">${i + 1}·${s.name}</span>`;
+  trackEl.appendChild(d);
+});
+const playheadEl = document.createElement("div");
+playheadEl.className = "playhead";
+trackEl.appendChild(playheadEl);
+$("t-total").textContent = fmt(TOTAL_SECS);
+
+const scoreCv = $("score"), scoreX = scoreCv.getContext("2d");
+const vizCv = $("viz"), vizX = vizCv.getContext("2d");
+const weaCv = $("weather"), weaX = weaCv.getContext("2d");
+const WX = weaCv.width = 560, WY = weaCv.height = 420;
+const INSTR_COLOR = { piano: "#00f0ff", strings: "#a855f7", harp: "#ff2fd6", bell: "#ffe066", bass: "#7b2ff7" };
+
+function drawScore(now) {
+  const w = scoreCv.clientWidth || 640, h = scoreCv.clientHeight || 190;
+  if (scoreCv.width !== w) { scoreCv.width = w; scoreCv.height = h; }
+  scoreX.clearRect(0, 0, w, h);
+  scoreX.fillStyle = "#05030c";
+  scoreX.fillRect(0, 0, w, h);
+  const viewA = 4, viewB = 6; // 过去/未来窗口（秒）
+  const t0 = now - viewA, t1 = now + viewB;
+  const x = (t) => (t - t0) / (t1 - t0) * w;
+  // 网格（每拍）
+  scoreX.strokeStyle = "rgba(123,47,247,.18)";
+  scoreX.lineWidth = 1;
+  const gridSec = 60 / SECTIONS[curSection].tempo;
+  for (let t = Math.floor(t0 / gridSec) * gridSec; t < t1; t += gridSec) {
+    scoreX.beginPath(); scoreX.moveTo(x(t), 0); scoreX.lineTo(x(t), h); scoreX.stroke();
+  }
+  // 音高轴
+  scoreX.strokeStyle = "rgba(255,255,255,.08)";
+  for (let m = 48; m <= 88; m += 12) {
+    const y = h - (m - 48) / (88 - 48) * (h - 24) - 12;
+    scoreX.beginPath(); scoreX.moveTo(0, y); scoreX.lineTo(w, y); scoreX.stroke();
+    scoreX.fillStyle = "rgba(157,149,201,.5)"; scoreX.font = "9px Consolas, monospace";
+    scoreX.fillText("C" + ((m / 12) | 0 - 1), 2, y - 2);
+  }
+  // 音符块
+  for (const e of EVENTS) {
+    if (e.sec + e.dur < t0 || e.sec > t1) continue;
+    const nx = x(e.sec), nw = Math.max(2, x(e.sec + e.dur) - nx);
+    const ny = h - (e.midi - 48) / (88 - 48) * (h - 24) - 12;
+    const col = INSTR_COLOR[e.instr];
+    scoreX.fillStyle = col + (e.sec <= now && e.sec + e.dur > now ? "ff" : "88");
+    scoreX.fillRect(nx, ny - 3, nw, 6);
+    if (e.sec <= now && e.sec + e.dur > now) {
+      scoreX.shadowColor = col; scoreX.shadowBlur = 10;
+      scoreX.fillRect(nx, ny - 3, nw, 6);
+      scoreX.shadowBlur = 0;
+    }
+  }
+  // 播放线
+  scoreX.strokeStyle = "#ff2fd6";
+  scoreX.shadowColor = "#ff2fd6"; scoreX.shadowBlur = 8;
+  scoreX.beginPath(); scoreX.moveTo(x(now), 0); scoreX.lineTo(x(now), h); scoreX.stroke();
+  scoreX.shadowBlur = 0;
+  // 标题
+  scoreX.fillStyle = "rgba(0,240,255,.6)";
+  scoreX.font = "10px Consolas, monospace";
+  scoreX.fillText("PIANO ROLL // LIVE", 6, 12);
+  scoreX.fillText("+" + viewB + "s", w - 36, 12);
+}
+
+function drawViz() {
+  const w = vizCv.clientWidth || 640, h = vizCv.clientHeight || 56;
+  if (vizCv.width !== w) { vizCv.width = w; vizCv.height = h; }
+  vizX.clearRect(0, 0, w, h);
+  vizX.fillStyle = "#05030c"; vizX.fillRect(0, 0, w, h);
+  const keys = Object.keys(channelEnergy);
+  const bw = w / keys.length;
+  keys.forEach((k, i) => {
+    channelEnergy[k] *= 0.92;
+    const bh = clamp(channelEnergy[k], 0, 1) * (h - 8);
+    const g = vizX.createLinearGradient(0, h - bh, 0, h);
+    g.addColorStop(0, INSTR_COLOR[k]); g.addColorStop(1, "#0d0620");
+    vizX.fillStyle = g;
+    vizX.fillRect(i * bw + 5, h - bh, bw - 10, bh);
+    vizX.fillStyle = "rgba(255,255,255,.7)";
+    vizX.font = "9px Consolas, monospace";
+    vizX.fillText(k[0].toUpperCase(), i * bw + 8, h - 5);
+  });
+}
+
+/* ================================================================
+   天气引擎：像素风场景 + 动物
+================================================================ */
+const WEATHERS = ["sunny", "rain", "snow", "thunder", "rainbow", "night"];
+let weather = "sunny";
+let particles = [];
+let birds = [], catState = null, foxState = null, duckState = null;
+let snowLevel = 0, lightningT = 0, flashA = 0, cloudList = [];
+let animT = 0, lastFrame = performance.now();
+let weatherLocked = false;
+
+function currentWeatherName() {
+  return { sunny: "晴 · 晨光", rain: "雨 · 淅沥", snow: "雪 · 静谧", thunder: "雷暴 · 云涌", rainbow: "虹 · 星雨", night: "夜 · 星海" }[weather];
+}
+
+function setWeather(w) {
+  weather = w;
+  document.querySelectorAll(".wbtn").forEach(b => b.classList.toggle("active", b.dataset.weather === w));
+  particles = [];
+  if (w === "snow") { snowLevel = Math.max(snowLevel, 0.25); }
+  const stat = $("weather-status");
+  const animalMsg = {
+    sunny: "像素猫在草地上散步，飞鸟掠过晨光",
+    rain: "像素鸭在水洼里打盹，猫撑起了伞",
+    snow: "像素狐踏雪而行，积雪缓缓堆积",
+    thunder: "雷暴将至，像素猫躲进小屋",
+    rainbow: "雨霁虹现，万物披上七彩光",
+    night: "夜色如海，萤火与星光辉映"
+  };
+  stat.innerHTML = `天气系统同步：<b>${currentWeatherName()}</b> · ${animalMsg[w]} <span class="cursor-blink"></span>`;
+}
+
+/* 像素精灵（字符画） */
+const PAL = {
+  ".": null,
+  K: "#23233f", k: "#3a3a5e", W: "#ffffff", G: "#8c6bf0", g: "#6f66a3",
+  O: "#ff9f43", o: "#e17055", T: "#f5f0ff", B: "#1d1b38", C: "#00f0ff",
+  M: "#ff2fd6", P: "#a855f7", Y: "#ffe066", N: "#9d95c9", D: "#5a4a9a",
+  E: "#7ae582", e: "#4e9f6e", S: "#c9e8ff", s: "#9fd0ff"
+};
+function sprite(rows) {
+  return rows.map(r => r.split("").map(c => PAL[c]));
+}
+const SPR_CAT = [
+  ["....KKKKKKKK...."],
+  ["...KKKKKKKKKK..."],
+  ["...KKkkkkkkKK..."],
+  ["..KKKKKKKKKKKK.."],
+  [".KKKKKKKKKKKKKK."],
+  [".KKKKKKKKKKKKKK."],
+  ["KKKKKKKKKKKKKKKK"],
+  ["KKKKKKKKKKKKKKKK"],
+  ["KK.KKKKKK.KKKK.K"],
+  [".K.KKKKKK.KKK.K."],
+  [".KK.KKKK..KKKK.."],
+  ["KKK.KKKK.KKKK.KK"]
+];
+const SPR_CAT_SIT = [
+  ["....KKKKKKKK...."],
+  ["...KKKKKKKKKK..."],
+  ["...KKkkkkkkKK..."],
+  ["..KKKKKKKKKKKK.."],
+  [".KKKKKKKKKKKKKK."],
+  [".KKKKKKKKKKKKKK."],
+  ["KKKKKKKKKKKKKKKK"],
+  ["KKKKKKKKKKKKKKKK"],
+  ["KKKKKKKKKKKKKKKK"],
+  [".KKKKKKKKKKKKKK."],
+  ["..KKKKKKKKKKKK.."],
+  ["...KKKKKKKKKK..."]
+];
+const SPR_BIRD = [
+  ["...WW...."],
+  ["..WWWW..."],
+  [".WWWWWY.."],
+  ["..WWWY..."],
+  ["..WW....."],
+  [".WW......"]
+];
+const SPR_BIRD2 = [
+  ["...WW...."],
+  ["..WWWW..."],
+  [".WWWWWY.."],
+  ["..WWWY..."],
+  ["..WW.WW.."],
+  ["....WW..."]
+];
+const SPR_FOX = [
+  ["....OOOO........"],
+  ["...OOOOOO......."],
+  ["..OOOOOOOO......"],
+  [".OOOOOOOOOO....."],
+  [".OOOOOOOOOO....."],
+  ["OOOOOOOOOOOO...."],
+  ["OOOOOOOOOOOO...."],
+  [".OOOOOOOOOOO...."],
+  [".OO.OOOO.OOO...."],
+  [".O..OOOO..O....."],
+  [".O.OOOOOO.O....."],
+  ["OO.OOOOOO.OO...."]
+];
+const SPR_FOX2 = [
+  ["....OOOO........"],
+  ["...OOOOOO......."],
+  ["..OOOOOOOO......"],
+  [".OOOOOOOOOO....."],
+  [".OOOOOOOOOO....."],
+  ["OOOOOOOOOOOO...."],
+  ["OOOOOOOOOOOO...."],
+  [".OOOOOOOOOOO...."],
+  [".OO.OOOO.OOO...."],
+  ["..OOOOOOOOOO...."],
+  ["..OOOOOOOOOO...."],
+  ["OO.OOOOOO.OO...."]
+];
+const SPR_DUCK = [
+  ["..YYY....."],
+  [".YYYYY...."],
+  [".YYYYYYO.."],
+  ["YYYYYYYYY."],
+  [".YYYYYYY.."],
+  ["..YYY.YY.."],
+  ["........."]
+];
+const SPR_DUCK2 = [
+  ["..YYY....."],
+  [".YYYYY...."],
+  [".YYYYYYO.."],
+  ["YYYYYYYYY."],
+  [".YYYYYYY.."],
+  ["..YYY.YY.."],
+  ["........."]
+];
+const SPR_UMBRELLA = [
+  ["......YYYYYY......"],
+  ["...YYYYYYYYYYYY..."],
+  [".YYYYYYYYYYYYYYYY."],
+  ["YYYYYYYYYYYYYYYYYY"],
+  ["YYYYYYYYYYYYYYYYYY"],
+  ["........PP........"],
+  ["........PP........"],
+  ["........PP........"],
+  ["........PP........"]
+];
+const SPR_TREE = [
+  [".......GG......."],
+  ["......GGGG......"],
+  [".....GGGGGG....."],
+  ["....GGGGGGGG...."],
+  ["...GGGGGGGGGG..."],
+  ["..GGGGGGGGGGGG.."],
+  [".GGGGGGGGGGGGGG."],
+  ["GGGGGGGGGGGGGGGG"],
+  [".......KK......."],
+  [".......KK......."],
+  [".......KK......."],
+  [".......KK......."]
+];
+const SPR_FLOWER = [
+  [".M."],
+  ["MPM"],
+  [".M."],
+  [".E."],
+  [".E."]
+];
+const SPR_FIREFLY = [["Y"]];
+
+function drawSprite(ctx, sp, x, y, px, frame) {
+  ctx.imageSmoothingEnabled = false;
+  for (let r = 0; r < sp.length; r++) {
+    const row = sp[r];
+    for (let c = 0; c < row.length; c++) {
+      const col = row[c];
+      if (!col) continue;
+      ctx.fillStyle = col;
+      ctx.fillRect(x + c * px, y + r * px, px, px);
+    }
+  }
+}
+
+/* 场景绘制 */
+function drawScene(now) {
+  weaX.imageSmoothingEnabled = false;
+  const t = now / 1000;
+  // 天空
+  let sky = null;
+  if (weather === "sunny") sky = weaX.createLinearGradient(0, 0, 0, WY * 0.72);
+  else if (weather === "rain" || weather === "thunder" || weather === "rainbow") sky = weaX.createLinearGradient(0, 0, 0, WY * 0.72);
+  else if (weather === "snow") sky = weaX.createLinearGradient(0, 0, 0, WY * 0.72);
+  else sky = weaX.createLinearGradient(0, 0, 0, WY * 0.72);
+  if (weather === "sunny") { sky.addColorStop(0, "#0f2b5b"); sky.addColorStop(1, "#2d4f8f"); }
+  else if (weather === "rain") { sky.addColorStop(0, "#23234d"); sky.addColorStop(1, "#3d3d6e"); }
+  else if (weather === "snow") { sky.addColorStop(0, "#2a2350"); sky.addColorStop(1, "#4c4378"); }
+  else if (weather === "thunder") { sky.addColorStop(0, "#120a24"); sky.addColorStop(1, "#241640"); }
+  else if (weather === "rainbow") { sky.addColorStop(0, "#18325e"); sky.addColorStop(1, "#5c4d8a"); }
+  else { sky.addColorStop(0, "#060313"); sky.addColorStop(1, "#191040"); }
+  weaX.fillStyle = sky;
+  weaX.fillRect(0, 0, WX, WY * 0.72);
+
+  // 星星（夜/雷暴/雪）
+  if (weather === "night" || weather === "snow" || weather === "thunder") {
+    weaX.fillStyle = "rgba(255,255,255,.8)";
+    for (let i = 0; i < 40; i++) {
+      const sx = (i * 137.5) % WX, sy = (i * 89.3) % (WY * 0.5);
+      const tw = 0.4 + 0.6 * Math.abs(Math.sin(t * 1.5 + i));
+      weaX.globalAlpha = tw;
+      weaX.fillRect(sx, sy, 2, 2);
+      weaX.globalAlpha = 1;
+    }
+  }
+  // 月亮
+  if (weather === "night") {
+    weaX.fillStyle = "#f4f1ff";
+    weaX.shadowColor = "#f4f1ff"; weaX.shadowBlur = 18;
+    weaX.beginPath(); weaX.arc(WX * 0.82, WY * 0.16, 16, 0, 7);
+    weaX.fill(); weaX.shadowBlur = 0;
+    weaX.fillStyle = "#191040";
+    weaX.beginPath(); weaX.arc(WX * 0.84, WY * 0.14, 13, 0, 7); weaX.fill();
+  }
+  // 太阳
+  if (weather === "sunny" || weather === "rainbow") {
+    const sunX = WX * 0.82, sunY = WY * 0.14;
+    weaX.save();
+    weaX.translate(sunX, sunY);
+    weaX.rotate(t * 0.12);
+    weaX.fillStyle = "rgba(255,224,102,.75)";
+    for (let i = 0; i < 8; i++) {
+      weaX.rotate(Math.PI / 4);
+      weaX.fillRect(16, -1.5, 14, 3);
+    }
+    weaX.restore();
+    weaX.fillStyle = "#ffe066";
+    weaX.shadowColor = "#ffe066"; weaX.shadowBlur = 20;
+    weaX.beginPath(); weaX.arc(sunX, sunY, 15, 0, 7); weaX.fill();
+    weaX.shadowBlur = 0;
+  }
+  // 云
+  if (cloudList.length === 0 || cloudList.length < 4) {
+    cloudList = Array.from({ length: 4 }, () => ({ x: rnd(-100, WX), y: rnd(20, WY * 0.3), s: rnd(0.7, 1.5), v: rnd(4, 12) }));
+  }
+  cloudList.forEach((c) => {
+    c.x += c.v * (weather === "thunder" ? 2.2 : 1);
+    if (c.x > WX + 130) c.x = -130;
+    weaX.fillStyle = weather === "thunder" ? "rgba(35,28,70,.95)" : "rgba(190,180,230,.85)";
+    weaX.fillRect(c.x, c.y, 52 * c.s, 12 * c.s);
+    weaX.fillRect(c.x + 12 * c.s, c.y - 8 * c.s, 30 * c.s, 10 * c.s);
+    weaX.fillRect(c.x + 26 * c.s, c.y - 12 * c.s, 18 * c.s, 8 * c.s);
+  });
+  // 彩虹
+  if (weather === "rainbow") {
+    const cols = ["#ff2fd6", "#ff9f43", "#ffe066", "#7ae582", "#00f0ff", "#a855f7"];
+    for (let i = 0; i < cols.length; i++) {
+      weaX.strokeStyle = cols[i];
+      weaX.globalAlpha = 0.45;
+      weaX.lineWidth = 6;
+      weaX.beginPath();
+      weaX.arc(WX * 0.5, WY * 0.78, 95 + i * 9, Math.PI, 0);
+      weaX.stroke();
+    }
+    weaX.globalAlpha = 1;
+  }
+  // 地面
+  const groundY = WY * 0.78;
+  const grd = weather === "snow" ? "#dfe7ff" : weather === "night" ? "#141033" : weather === "thunder" ? "#1c1538" : "#3d5a46";
+  weaX.fillStyle = grd;
+  weaX.fillRect(0, groundY, WX, WY - groundY);
+  if (weather === "snow") {
+    snowLevel = Math.min(1, snowLevel + 0.0002);
+    const snowH = 8 + snowLevel * 18;
+    weaX.fillStyle = "#ffffff";
+    weaX.fillRect(0, groundY, WX, snowH);
+    weaX.fillStyle = "rgba(160,190,255,.7)";
+    for (let i = 0; i < 30; i++) weaX.fillRect((i * 61) % WX, groundY + snowH - 3 + ((i * 17) % 5), 3, 3);
+  }
+  // 草地/花朵/树
+  if (weather === "sunny" || weather === "rainbow") {
+    weaX.fillStyle = "rgba(126,229,130,.35)";
+    for (let i = 0; i < 60; i++) {
+      const gx = (i * 23) % WX, gy = groundY + 2 + ((i * 7) % 6);
+      weaX.fillRect(gx, gy, 2, 5);
+    }
+    for (let i = 0; i < 4; i++) {
+      drawSprite(weaX, SPR_FLOWER, (i * 137 + 40) % (WX - 30), groundY - 20, 4, 0);
+    }
+    drawSprite(weaX, SPR_TREE, WX - 110, groundY - 48, 4, 0);
+  }
+  if (weather === "rain" || weather === "thunder") {
+    drawSprite(weaX, SPR_TREE, WX - 120, groundY - 48, 4, 0);
+  }
+  if (weather === "snow") {
+    drawSprite(weaX, SPR_TREE, WX - 110, groundY - 48, 4, 0);
+    // 雪人
+    weaX.fillStyle = "#ffffff";
+    weaX.fillRect(WX * 0.2 - 12, groundY - 26, 24, 26);
+    weaX.fillRect(WX * 0.2 - 8, groundY - 44, 16, 18);
+    weaX.fillStyle = "#23233f";
+    weaX.fillRect(WX * 0.2 - 4, groundY - 36, 3, 3);
+    weaX.fillRect(WX * 0.2 + 3, groundY - 36, 3, 3);
+    weaX.fillStyle = "#ff9f43";
+    weaX.fillRect(WX * 0.2 - 1, groundY - 30, 3, 4);
+  }
+
+  /* 粒子：雨 / 雪 / 雷暴 */
+  if (weather === "rain" || weather === "thunder") {
+    const rate = weather === "thunder" ? 260 : 150;
+    while (particles.length < rate) particles.push({ x: rnd(0, WX), y: rnd(-WY, 0), v: rnd(9, 15), l: rnd(8, 16) });
+    weaX.strokeStyle = "rgba(160,200,255,.75)";
+    weaX.lineWidth = 1;
+    particles.forEach(p => {
+      p.y += p.v; p.x += p.v * 0.18;
+      if (p.y > groundY) { p.y = rnd(-WY, -5); p.x = rnd(0, WX); }
+      weaX.beginPath(); weaX.moveTo(p.x, p.y); weaX.lineTo(p.x + 2, p.y + p.l); weaX.stroke();
+    });
+  }
+  if (weather === "snow") {
+    while (particles.length < 130) particles.push({ x: rnd(0, WX), y: rnd(-WY, 0), v: rnd(1.2, 2.6), ph: rnd(0, 7) });
+    particles.forEach(p => {
+      p.y += p.v;
+      p.x += Math.sin(t * 1.2 + p.ph) * 0.7;
+      if (p.y > groundY) { p.y = rnd(-WY, -5); p.x = rnd(0, WX); }
+      weaX.fillStyle = "rgba(255,255,255,.9)";
+      weaX.fillRect(p.x, p.y, 3, 3);
+    });
+  }
+  if (weather === "thunder") {
+    lightningT -= 1 / 60;
+    if (lightningT <= 0 && Math.random() < 0.012) { lightningT = 0.16; flashA = 0.85; }
+    if (flashA > 0) {
+      weaX.fillStyle = `rgba(220,235,255,${flashA})`;
+      weaX.fillRect(0, 0, WX, WY);
+      flashA *= 0.82;
+    }
+  }
+
+  /* 动物 */
+  if (weather === "sunny" || weather === "rainbow") {
+    // 飞鸟
+    if (birds.length < 3 && Math.random() < 0.01) birds.push({ x: -30, y: rnd(40, WY * 0.3), v: rnd(1.5, 2.5), f: 0 });
+    birds.forEach(b => {
+      b.x += b.v; b.f += 1;
+      const sp = (Math.floor(b.f / 8) % 2 === 0) ? SPR_BIRD : SPR_BIRD2;
+      drawSprite(weaX, sp, b.x, b.y, 4, 0);
+    });
+    birds = birds.filter(b => b.x < WX + 30);
+    // 猫散步
+    if (!catState) catState = { x: 40, dir: 1, f: 0 };
+    catState.x += catState.dir * 0.45;
+    catState.f += 1;
+    if (catState.x > WX - 90) catState.dir = -1;
+    if (catState.x < 20) catState.dir = 1;
+    const catSp = (Math.floor(catState.f / 10) % 2 === 0) ? SPR_CAT : SPR_CAT_SIT;
+    drawSprite(weaX, catSp, catState.x, groundY - 44, 4, 0);
+  }
+  if (weather === "rain") {
+    // 鸭在水洼
+    if (!duckState) duckState = { bob: 0 };
+    duckState.bob += 0.08;
+    const dy = Math.abs(Math.sin(duckState.bob)) * 2;
+    weaX.fillStyle = "rgba(120,160,255,.35)";
+    weaX.fillRect(80, groundY - 4, 110, 8);
+    drawSprite(weaX, (Math.floor(duckState.bob) % 2 === 0) ? SPR_DUCK : SPR_DUCK2, 120, groundY - 24 + dy, 4, 0);
+    // 猫撑伞
+    if (!catState) catState = { x: WX * 0.62, dir: 1, f: 0 };
+    drawSprite(weaX, SPR_CAT_SIT, catState.x, groundY - 40, 4, 0);
+    drawSprite(weaX, SPR_UMBRELLA, catState.x - 6, groundY - 76, 4, 0);
+  }
+  if (weather === "thunder") {
+    // 猫躲树旁
+    if (!catState) catState = { x: WX - 148, dir: 1, f: 0 };
+    catState.f += 1;
+    const shiver = (Math.floor(catState.f / 6) % 2 === 0) ? 0 : 1;
+    drawSprite(weaX, SPR_CAT_SIT, catState.x + shiver, groundY - 44, 4, 0);
+    drawSprite(weaX, SPR_TREE, WX - 120, groundY - 48, 4, 0);
+  }
+  if (weather === "snow") {
+    if (!foxState) foxState = { x: 40, dir: 1, f: 0 };
+    foxState.x += foxState.dir * 0.35;
+    foxState.f += 1;
+    if (foxState.x > WX - 130) foxState.dir = -1;
+    if (foxState.x < 20) foxState.dir = 1;
+    const foxSp = (Math.floor(foxState.f / 10) % 2 === 0) ? SPR_FOX : SPR_FOX2;
+    drawSprite(weaX, foxSp, foxState.x, groundY - 44, 4, 0);
+  }
+  if (weather === "night") {
+    // 萤火虫
+    if (particles.length < 26) particles.push({ x: rnd(0, WX), y: rnd(0, WY * 0.7), v: 0.3, ph: rnd(0, 7) });
+    particles.forEach(p => {
+      p.y += Math.sin(t * 0.7 + p.ph) * 0.25;
+      p.x += Math.cos(t * 0.5 + p.ph) * 0.25;
+      const a = 0.4 + 0.6 * Math.abs(Math.sin(t * 2 + p.ph));
+      weaX.fillStyle = `rgba(255,224,102,${a})`;
+      weaX.fillRect(p.x, p.y, 3, 3);
+    });
+    if (!catState) catState = { x: WX * 0.45, dir: 1, f: 0 };
+    catState.f += 1;
+    const sleep = (Math.floor(catState.f / 20) % 2 === 0) ? 0 : 1;
+    drawSprite(weaX, SPR_CAT_SIT, catState.x, groundY - 44 + sleep, 4, 0);
+    drawSprite(weaX, SPR_TREE, WX - 110, groundY - 48, 4, 0);
+  }
+}
+
+/* ================================================================
+   主循环
+================================================================ */
+function tick(now) {
+  const dt = (now - lastFrame) / 1000;
+  lastFrame = now;
+  animT += dt;
+  const sec = currentSec();
+  drawScene(now);
+
+  if (playing) {
+    const prog = clamp(sec / TOTAL_SECS, 0, 1);
+    playheadEl.style.left = (prog * 100) + "%";
+    $("t-cur").textContent = fmt(sec);
+    curSection = SECTIONS.findIndex(s => sec >= s.startSec && sec < s.startSec + s.secs);
+    if (curSection < 0) curSection = SECTIONS.length - 1;
+    if (curSection !== lastSection) {
+      lastSection = curSection;
+      const s = SECTIONS[curSection];
+      $("section-badge").textContent = "◆ " + s.name;
+      $("t-section").textContent = s.name;
+      if (!weatherLocked) setWeather(s.weather);
+    }
+    if (sec >= TOTAL_SECS) { pausePlay(); $("btn-play").textContent = "▶ 演奏"; }
+  } else {
+    playheadEl.style.left = "0%";
+    $("t-cur").textContent = "00:00";
+  }
+  drawScore(sec);
+  drawViz();
+  requestAnimationFrame(tick);
+}
+
+/* ================================================================
+   控件
+================================================================ */
+document.querySelectorAll(".wbtn").forEach(b => {
+  b.addEventListener("click", () => { weatherLocked = true; setWeather(b.dataset.weather); });
+});
+document.addEventListener("keydown", (e) => {
+  if (e.code === "Space") { e.preventDefault(); playing ? pausePlay() : startPlay(); }
+});
+$("weather-status").innerHTML = "系统自检完成 · 点击「演奏」开始 <span class='cursor-blink'></span>";
+$("t-total").textContent = fmt(TOTAL_SECS);
+
+/* 演示模式：?autoplay=1 自动开始（便于预览/截图） */
+if (new URLSearchParams(location.search).get("autoplay") === "1") {
+  window.addEventListener("load", () => setTimeout(startPlay, 500));
+}
+
+requestAnimationFrame(tick);
+</script>
 </body>
 </html>

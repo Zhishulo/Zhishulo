@@ -51,7 +51,7 @@
 <!-- ===================== 实时数据面板 ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2>⚡ 数据面板 &nbsp;|&nbsp; Live Stats</h2>
+  <h2 style="color:#00e5ff;text-shadow:0 0 14px rgba(0,240,255,.55);letter-spacing:3px;">⚡ 数据面板 &nbsp;|&nbsp; Live Stats</h2>
 
   <img src="https://github-profile-summary-cards.vercel.app/api/cards/profile-details?username=Zhishulo&amp;theme=github_dark" width="88%" alt="Profile Details">
   <br><br>
@@ -66,54 +66,37 @@
 
 <br>
 
-<!-- ===================== 技术栈 ===================== -->
-<div align="center">
-  <img src="assets/divider.svg" width="100%" alt="">
-  <h2>🛠️ 技术栈 &nbsp;|&nbsp; Tech Stack</h2>
-
-  <img src="https://skillicons.dev/icons?i=python,pytorch,tensorflow,flask,html,css,js,git,github,linux,vscode,md" alt="Skill Icons">
-  <br><br>
-  <img src="https://img.shields.io/badge/NumPy-013243?style=flat-square&amp;logo=numpy&amp;logoColor=white" alt="NumPy">
-  <img src="https://img.shields.io/badge/Pandas-150458?style=flat-square&amp;logo=pandas&amp;logoColor=white" alt="Pandas">
-  <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&amp;logo=scikit-learn&amp;logoColor=white" alt="sklearn">
-  <img src="https://img.shields.io/badge/Matplotlib-11557C?style=flat-square&amp;logo=python&amp;logoColor=white" alt="Matplotlib">
-  <img src="https://img.shields.io/badge/ECharts-AA344D?style=flat-square&amp;logo=apacheecharts&amp;logoColor=white" alt="ECharts">
-</div>
-
-<br>
-
 <!-- ===================== 典型项目 ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2>🚀 典型项目 &nbsp;|&nbsp; Featured Projects</h2>
+  <h2 style="color:#a855f7;text-shadow:0 0 14px rgba(168,85,247,.6);letter-spacing:3px;">🚀 典型项目 &nbsp;|&nbsp; Featured Projects</h2>
 </div>
 
 <table align="center">
   <tr>
-    <td align="center" width="33%">
+    <td align="center" width="33%" style="border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:14px 12px;background:rgba(16,8,36,.35);box-shadow:inset 0 0 26px rgba(123,47,247,.08);">
       <!-- TODO: 替换 assets/projects/shisikelang-cover.svg 为游戏封面 -->
-      <img src="assets/projects/shisikelang-cover.svg" width="300" alt="ShiKeLangSummer cover">
+      <img src="assets/projects/shisikelang-cover.svg" width="320" alt="ShiKeLangSummer cover">
       <h3><a href="https://github.com/Zhishulo/ShiKeLangSummer">🎮 ShiKeLangSummer</a></h3>
-      <p>我的 <b>第一个 Galgame</b> —— 用文字、音乐与选择，讲一个属于夏天的故事。</p>
+      <p>我的 <b>第一个 Galgame</b> —— 文字、音乐与选择，讲一个夏天的故事。</p>
       <img src="https://img.shields.io/badge/Galgame-FA8C16?style=for-the-badge" alt="Galgame">
       <img src="https://img.shields.io/badge/First%20Work-7C3AED?style=for-the-badge" alt="First Work">
     </td>
-    <td align="center" width="33%">
+    <td align="center" width="33%" style="border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:14px 12px;background:rgba(16,8,36,.35);box-shadow:inset 0 0 26px rgba(123,47,247,.08);">
       <!-- TODO: 替换 assets/projects/bunopet-cover.svg 为智能体封面 -->
-      <img src="assets/projects/bunopet-cover.svg" width="300" alt="BunoPet cover">
+      <img src="assets/projects/bunopet-cover.svg" width="320" alt="BunoPet cover">
       <h3><a href="https://github.com/Zhishulo/BunoPet">🤖 BunoPet</a></h3>
-      <p>我的 <b>首个智能体（Agent）</b> —— 一个会陪伴、能对话的 AI 宠物。</p>
+      <p>我的 <b>首个智能体（Agent）</b> —— 会陪伴、能对话的 AI 宠物。</p>
       <img src="https://img.shields.io/badge/Agent-00f2fe?style=for-the-badge" alt="Agent">
       <img src="https://img.shields.io/badge/AI%20Pet-4facfe?style=for-the-badge" alt="AI Pet">
     </td>
-    <td align="center" width="33%">
+    <td align="center" width="33%" style="border:1px solid rgba(168,85,247,.35);border-radius:14px;padding:14px 12px;background:rgba(16,8,36,.35);box-shadow:inset 0 0 26px rgba(123,47,247,.08);">
       <!-- TODO: 替换 assets/projects/bilstm-cover.svg 为项目架构图/效果图 -->
-      <img src="assets/projects/bilstm-cover.svg" width="300" alt="bilstm-logit-lens cover">
+      <img src="assets/projects/bilstm-cover.svg" width="320" alt="bilstm-logit-lens cover">
       <h3><a href="https://github.com/Zhishulo/bilstm-logit-lens">🧠 bilstm-logit-lens</a></h3>
-      <p>我目前 <b>最拿得出手的 AI 项目</b> —— BiLSTM + Logit Lens 可解释性可视化系统。</p>
+      <p>我目前 <b>最拿得出手的 AI 项目</b> —— BiLSTM + Logit Lens 可解释性系统。</p>
       <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&amp;logo=pytorch&amp;logoColor=white" alt="PyTorch">
       <img src="https://img.shields.io/badge/Explainable%20AI-6BCBFF?style=for-the-badge" alt="XAI">
-      <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&amp;logo=flask&amp;logoColor=white" alt="Flask">
     </td>
   </tr>
 </table>
@@ -123,15 +106,15 @@
 <!-- ===================== Cyber Symphony 音乐厅 ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2>🎹 Cyber Symphony &nbsp;|&nbsp; 音乐厅</h2>
+  <h2 style="color:#ff2fd6;text-shadow:0 0 14px rgba(255,47,214,.6);letter-spacing:3px;">🎹 Cyber Symphony &nbsp;|&nbsp; 音乐厅</h2>
 
   <!-- TODO: 将 assets/projects/cyber-symphony-cover.svg 替换为音乐厅封面（可选） -->
-  <a href="https://zhishulo.github.io/Zhishulo/cyber-symphony/">
-    <img src="assets/projects/cyber-symphony-cover.svg" width="560" alt="Cyber Symphony 音乐厅">
+  <a href="https://zhishulo.github.io/Zhishulo/">
+    <img src="assets/projects/cyber-symphony-cover.svg" width="640" alt="Cyber Symphony 音乐厅">
   </a>
   <p>
     蓝紫赛博朋克 × 像素天气 × 经典乐章 —— 自作曲《星雨协奏曲》自动演奏，进度可视化<br>
-    <a href="https://zhishulo.github.io/Zhishulo/cyber-symphony/"><b>🎧 进入音乐厅 →</b></a>
+    点击封面 <b>直达音乐厅</b>（GitHub Pages 直出，无需跳转）
   </p>
 </div>
 
@@ -140,7 +123,7 @@
 <!-- ===================== 二次元角落 ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2>🌸 二次元角落 &nbsp;|&nbsp; Anime Corner</h2>
+  <h2 style="color:#ff9f43;text-shadow:0 0 14px rgba(255,159,67,.55);letter-spacing:3px;">🌸 二次元角落 &nbsp;|&nbsp; Anime Corner</h2>
 
   <!-- TODO: 将 assets/anime-placeholder-*.svg 替换为你喜欢的二次元图片 -->
   <img src="assets/anime-placeholder-1.svg" width="44%" alt="Anime 1">
@@ -155,57 +138,14 @@
 
 <br>
 
-<!-- ===================== 贡献蛇（自动生成） ===================== -->
+<!-- ===================== 签到蛇（每天自动更新） ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">
-  <h2>🐍 贡献面板 &nbsp;|&nbsp; Contribution</h2>
+  <h2 style="color:#7ae582;text-shadow:0 0 14px rgba(122,229,130,.55);letter-spacing:3px;">🐍 签到蛇 &nbsp;|&nbsp; Daily Check-in</h2>
 
-  <!-- 由 .github/workflows/snake.yml 自动生成到 output 分支 -->
-  <img src="https://raw.githubusercontent.com/Zhishulo/Zhishulo/output/github-contribution-grid-snake-dark.svg" width="90%" alt="GitHub Contribution Snake">
-  <p><i>我的每一格贡献，都会被这条贪吃蛇吃掉 ✨</i></p>
-</div>
-
-<br>
-
-<!-- ===================== 2026 目标 ===================== -->
-<div align="center">
-  <img src="assets/divider.svg" width="100%" alt="">
-  <h2>🎯 2026 小目标 &nbsp;|&nbsp; Goals</h2>
-
-  <table align="center" width="70%">
-    <tr>
-      <td align="left" width="45%">🚀 完成一篇可解释性方向的研究</td>
-      <td width="55%">
-        <div style="background:#1e293b;border-radius:8px;padding:2px;">
-          <div style="background:linear-gradient(90deg,#00f2fe,#4facfe);width:30%;border-radius:8px;padding:3px 0;text-align:center;color:#fff;font-size:12px;">30%</div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td align="left">🎮 完成第二部 Galgame 剧本</td>
-      <td>
-        <div style="background:#1e293b;border-radius:8px;padding:2px;">
-          <div style="background:linear-gradient(90deg,#f093fb,#f5576c);width:45%;border-radius:8px;padding:3px 0;text-align:center;color:#fff;font-size:12px;">45%</div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td align="left">🤖 让 BunoPet 学会"记得我"</td>
-      <td>
-        <div style="background:#1e293b;border-radius:8px;padding:2px;">
-          <div style="background:linear-gradient(90deg,#43e97b,#38f9d7);width:60%;border-radius:8px;padding:3px 0;text-align:center;color:#fff;font-size:12px;">60%</div>
-        </div>
-      </td>
-    </tr>
-    <tr>
-      <td align="left">🌸 补完 N 部新番（N→∞）</td>
-      <td>
-        <div style="background:#1e293b;border-radius:8px;padding:2px;">
-          <div style="background:linear-gradient(90deg,#ffd1e8,#ff69b4);width:99%;border-radius:8px;padding:3px 0;text-align:center;color:#fff;font-size:12px;">99%</div>
-        </div>
-      </td>
-    </tr>
-  </table>
+  <!-- 由 .github/workflows/checkin-snake.yml 每天自动生成到 output 分支 -->
+  <img src="https://raw.githubusercontent.com/Zhishulo/Zhishulo/output/checkin-snake.svg" width="90%" alt="Daily Check-in Snake">
+  <p><i>每天坚持签到，签到蛇就会越来越长 ✨</i></p>
 </div>
 
 <br>

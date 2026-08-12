@@ -1,57 +1,86 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 240" width="1000" height="240">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#0f0c29">
-        <animate attributeName="stop-color" values="#0f0c29;#302b63;#24243e;#0f0c29" dur="14s" repeatCount="indefinite"/>
+      <stop offset="0%" stop-color="#07030f">
+        <animate attributeName="stop-color" values="#07030f;#1b0f3d;#140a2e;#07030f" dur="16s" repeatCount="indefinite"/>
       </stop>
-      <stop offset="50%" stop-color="#302b63">
-        <animate attributeName="stop-color" values="#302b63;#24243e;#0f0c29;#302b63" dur="14s" repeatCount="indefinite"/>
+      <stop offset="45%" stop-color="#1b0f3d">
+        <animate attributeName="stop-color" values="#1b0f3d;#140a2e;#07030f;#1b0f3d" dur="16s" repeatCount="indefinite"/>
       </stop>
-      <stop offset="100%" stop-color="#24243e">
-        <animate attributeName="stop-color" values="#24243e;#0f0c29;#302b63;#24243e" dur="14s" repeatCount="indefinite"/>
+      <stop offset="100%" stop-color="#140a2e">
+        <animate attributeName="stop-color" values="#140a2e;#07030f;#1b0f3d;#140a2e" dur="16s" repeatCount="indefinite"/>
       </stop>
     </linearGradient>
     <linearGradient id="neon" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0%" stop-color="#00f2fe"/>
-      <stop offset="50%" stop-color="#4facfe"/>
-      <stop offset="100%" stop-color="#f093fb"/>
-      <animateTransform attributeName="gradientTransform" type="translate" from="-400 0" to="400 0" dur="7s" repeatCount="indefinite"/>
+      <stop offset="0%" stop-color="#00f0ff"/>
+      <stop offset="30%" stop-color="#4facfe"/>
+      <stop offset="65%" stop-color="#a855f7"/>
+      <stop offset="100%" stop-color="#ff2fd6"/>
+      <animateTransform attributeName="gradientTransform" type="translate" from="-500 0" to="500 0" dur="8s" repeatCount="indefinite"/>
     </linearGradient>
-    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#4facfe" stop-opacity="0.30"/>
+    <radialGradient id="glowA" cx="30%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="#4facfe" stop-opacity="0.32"/>
       <stop offset="100%" stop-color="#4facfe" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="75%" cy="72%" r="55%">
+      <stop offset="0%" stop-color="#ff2fd6" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#ff2fd6" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
   <rect width="1000" height="240" fill="url(#bg)"/>
+  <rect width="1000" height="240" fill="url(#glowA)"/>
+  <rect width="1000" height="240" fill="url(#glowB)"/>
 
-  <!-- 呼吸光晕 -->
-  <circle cx="500" cy="120" r="170" fill="url(#glow)">
-    <animate attributeName="r" values="150;195;150" dur="5s" repeatCount="indefinite"/>
-  </circle>
-
-  <!-- 扫描线 -->
-  <rect x="-30" y="0" width="50" height="240" fill="#00f2fe" opacity="0.07">
-    <animate attributeName="x" values="-50;1000;-50" dur="10s" repeatCount="indefinite"/>
+  <!-- 双扫描线 -->
+  <rect x="-30" y="0" width="46" height="240" fill="#00f0ff" opacity="0.07">
+    <animate attributeName="x" values="-60;1000;-60" dur="9s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="-30" y="0" width="46" height="240" fill="#ff2fd6" opacity="0.05">
+    <animate attributeName="x" values="1000;-60;1000" dur="13s" begin="3s" repeatCount="indefinite"/>
   </rect>
 
-  <!-- 上升粒子 -->
-  <g fill="#6bcbff">
-    <circle cx="80" cy="220" r="2"><animate attributeName="cy" values="250;-10" dur="7s" repeatCount="indefinite"/></circle>
-    <circle cx="180" cy="220" r="1.6" opacity="0.8"><animate attributeName="cy" values="250;-10" dur="9s" begin="1s" repeatCount="indefinite"/></circle>
-    <circle cx="300" cy="220" r="2.2"><animate attributeName="cy" values="250;-10" dur="8s" begin="2s" repeatCount="indefinite"/></circle>
-    <circle cx="420" cy="220" r="1.5" opacity="0.7"><animate attributeName="cy" values="250;-10" dur="11s" begin="0.5s" repeatCount="indefinite"/></circle>
-    <circle cx="560" cy="220" r="2"><animate attributeName="cy" values="250;-10" dur="7.5s" begin="3s" repeatCount="indefinite"/></circle>
-    <circle cx="680" cy="220" r="1.8" opacity="0.8"><animate attributeName="cy" values="250;-10" dur="9.5s" begin="1.5s" repeatCount="indefinite"/></circle>
-    <circle cx="800" cy="220" r="2.2"><animate attributeName="cy" values="250;-10" dur="8.5s" begin="2.5s" repeatCount="indefinite"/></circle>
-    <circle cx="920" cy="220" r="1.6" opacity="0.7"><animate attributeName="cy" values="250;-10" dur="10s" begin="0.8s" repeatCount="indefinite"/></circle>
-    <circle cx="140" cy="220" r="1.2" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="12s" begin="4s" repeatCount="indefinite"/></circle>
-    <circle cx="360" cy="220" r="1.4" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="13s" begin="2.2s" repeatCount="indefinite"/></circle>
-    <circle cx="640" cy="220" r="1.2" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="11.5s" begin="3.5s" repeatCount="indefinite"/></circle>
-    <circle cx="860" cy="220" r="1.4" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="12.5s" begin="1.2s" repeatCount="indefinite"/></circle>
+  <!-- 呼吸光晕 -->
+  <circle cx="330" cy="100" r="150" fill="url(#glowA)">
+    <animate attributeName="r" values="130;180;130" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="720" cy="170" r="120" fill="url(#glowB)">
+    <animate attributeName="r" values="100;150;100" dur="7s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+
+  <!-- 上升粒子（三色） -->
+  <g>
+    <circle cx="80" cy="220" r="2" fill="#00f0ff"><animate attributeName="cy" values="250;-10" dur="7s" repeatCount="indefinite"/></circle>
+    <circle cx="180" cy="220" r="1.6" fill="#a855f7" opacity="0.85"><animate attributeName="cy" values="250;-10" dur="9s" begin="1s" repeatCount="indefinite"/></circle>
+    <circle cx="300" cy="220" r="2.2" fill="#00f0ff"><animate attributeName="cy" values="250;-10" dur="8s" begin="2s" repeatCount="indefinite"/></circle>
+    <circle cx="420" cy="220" r="1.5" fill="#ff2fd6" opacity="0.8"><animate attributeName="cy" values="250;-10" dur="11s" begin="0.5s" repeatCount="indefinite"/></circle>
+    <circle cx="560" cy="220" r="2" fill="#a855f7"><animate attributeName="cy" values="250;-10" dur="7.5s" begin="3s" repeatCount="indefinite"/></circle>
+    <circle cx="680" cy="220" r="1.8" fill="#00f0ff" opacity="0.85"><animate attributeName="cy" values="250;-10" dur="9.5s" begin="1.5s" repeatCount="indefinite"/></circle>
+    <circle cx="800" cy="220" r="2.2" fill="#ff2fd6"><animate attributeName="cy" values="250;-10" dur="8.5s" begin="2.5s" repeatCount="indefinite"/></circle>
+    <circle cx="920" cy="220" r="1.6" fill="#a855f7" opacity="0.8"><animate attributeName="cy" values="250;-10" dur="10s" begin="0.8s" repeatCount="indefinite"/></circle>
+    <circle cx="140" cy="220" r="1.2" fill="#00f0ff" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="12s" begin="4s" repeatCount="indefinite"/></circle>
+    <circle cx="360" cy="220" r="1.4" fill="#ff2fd6" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="13s" begin="2.2s" repeatCount="indefinite"/></circle>
+    <circle cx="640" cy="220" r="1.2" fill="#a855f7" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="11.5s" begin="3.5s" repeatCount="indefinite"/></circle>
+    <circle cx="860" cy="220" r="1.4" fill="#00f0ff" opacity="0.6"><animate attributeName="cy" values="250;-10" dur="12.5s" begin="1.2s" repeatCount="indefinite"/></circle>
   </g>
 
+  <!-- 底部电路线 -->
+  <path d="M0 226 H150 L190 206 H280 L320 226 H470 L510 206 H600 L640 226 H790 L830 206 H920 L960 226 H1000"
+        fill="none" stroke="#00f0ff" stroke-width="2" stroke-linecap="round" opacity="0.55"
+        stroke-dasharray="14 10">
+    <animate attributeName="stroke-dashoffset" values="0;-96" dur="4s" repeatCount="indefinite"/>
+  </path>
+  <circle cx="320" cy="226" r="4" fill="#ff2fd6">
+    <animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="640" cy="226" r="4" fill="#a855f7">
+    <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" begin="1s" repeatCount="indefinite"/>
+  </circle>
+
   <!-- 霓虹标题 -->
-  <text x="500" y="118" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="62" font-weight="700" fill="url(#neon)" letter-spacing="8">ZHISHULO</text>
-  <text x="500" y="156" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#a9c1ff" letter-spacing="5" opacity="0.95">AI RESEARCHER · DEVELOPER · ANIME LOVER</text>
+  <text x="500" y="116" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="64" font-weight="700" fill="url(#neon)" letter-spacing="10">ZHISHULO</text>
+  <text x="500" y="154" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="17" fill="#a9c1ff" letter-spacing="6" opacity="0.95">
+    AI RESEARCHER · DEVELOPER · ANIME LOVER
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+  </text>
 </svg>
