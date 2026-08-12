@@ -120,6 +120,23 @@
 
 <br>
 
+<!-- ===================== Cyber Symphony 音乐厅 ===================== -->
+<div align="center">
+  <img src="assets/divider.svg" width="100%" alt="">
+  <h2>🎹 Cyber Symphony &nbsp;|&nbsp; 音乐厅</h2>
+
+  <!-- TODO: 将 assets/projects/cyber-symphony-cover.svg 替换为音乐厅封面（可选） -->
+  <a href="https://zhishulo.github.io/Zhishulo/cyber-symphony/">
+    <img src="assets/projects/cyber-symphony-cover.svg" width="560" alt="Cyber Symphony 音乐厅">
+  </a>
+  <p>
+    蓝紫赛博朋克 × 像素天气 × 经典乐章 —— 自作曲《星雨协奏曲》自动演奏，进度可视化<br>
+    <a href="https://zhishulo.github.io/Zhishulo/cyber-symphony/"><b>🎧 进入音乐厅 →</b></a>
+  </p>
+</div>
+
+<br>
+
 <!-- ===================== 二次元角落 ===================== -->
 <div align="center">
   <img src="assets/divider.svg" width="100%" alt="">

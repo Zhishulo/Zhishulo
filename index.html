@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zhishulo · Cyber Symphony</title>
+<style>
+  body{
+    margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(900px 500px at 50% -10%, #1b0f3d 0%, #07030f 60%, #03010a 100%);
+    color:#e8e6ff; font-family:"Consolas","Courier New",monospace; text-align:center;
+  }
+  .box{padding:32px}
+  h1{font-size:22px; letter-spacing:4px; margin:0 0 10px;
+     background:linear-gradient(90deg,#00f0ff,#a855f7,#ff2fd6,#00f0ff);
+     background-size:280% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
+     animation:g 7s linear infinite}
+  @keyframes g{to{background-position:280% 0}}
+  p{color:#9d95c9; font-size:13px; letter-spacing:2px}
+  a{display:inline-block; margin-top:18px; padding:12px 30px; color:#fff; text-decoration:none;
+    border:1px solid #00f0ff; background:linear-gradient(90deg, rgba(0,240,255,.18), rgba(168,85,247,.25));
+    box-shadow:0 0 12px rgba(0,240,255,.6); letter-spacing:3px;
+    clip-path:polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 0 100%)}
+</style>
+</head>
+<body>
+  <div class="box">
+    <h1>CYBER SYMPHONY</h1>
+    <p>像素天气 × 经典乐章 · 自动化演奏</p>
+    <a href="cyber-symphony/">🎧 进入音乐厅</a>
+  </div>
+  <script>location.replace("cyber-symphony/");</script>
+</body>
+</html>
