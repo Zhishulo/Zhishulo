@@ -199,8 +199,9 @@
   <br><br>
   <p>
     📫 <b>联系我</b> &nbsp;|&nbsp;
-    <a href="https://github.com/Zhishulo">GitHub</a>
-    <!-- TODO: 补充你的其他联系方式（邮箱 / 博客 / B站 / 知乎...） -->
+    <a href="https://github.com/Zhishulo">GitHub</a> &nbsp;·&nbsp;
+    <a href="mailto:zhishulo@sina.com">✉️ zhishulo@sina.com</a>
+    <!-- TODO: 可继续补充博客 / B站 / 知乎等 -->
   </p>
   <p>
     <img src="https://komarev.com/ghpvc/?username=Zhishulo&amp;color=6BCBFF" alt="Profile Views">
