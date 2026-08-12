@@ -53,6 +53,7 @@ SKY_LOW = hexrgb("#1b0f45")
 FOG_HI = hexrgb("#2c1e55")
 FOG_TEAL = hexrgb("#12364a")
 FOG_DARK = hexrgb("#1a1238")
+HAZE = hexrgb("#3a2a66")
 STAR = hexrgb("#9fb4e8")
 
 MOON = hexrgb("#ff9fe0")
@@ -61,6 +62,10 @@ MOON_DK = hexrgb("#1b0f45")
 TOWER_BACK = hexrgb("#0a0620")
 TOWER_MID = hexrgb("#0d0930")
 TOWER_FRONT = hexrgb("#0b0726")
+FAR_BLDG = hexrgb("#171139")
+FAR_BLDG2 = hexrgb("#110c2e")
+MID_BODY = hexrgb("#0e0a2c")
+MID_BODY_L = hexrgb("#16103a")
 WIN_DIM = hexrgb("#1e2a4d")
 WIN_CYAN = hexrgb("#4ec9ff")
 WIN_AMBER = hexrgb("#ffcf5c")
@@ -124,8 +129,16 @@ KIOSK_SCREEN = hexrgb("#7ff0ff")
 UI_BORDER = hexrgb("#00f0ff")
 UI_BAR = hexrgb("#ff2fd6")
 UI_BAR2 = hexrgb("#5ff0ff")
+BALCONY = hexrgb("#0b0820")
+RAIL = hexrgb("#2a2560")
+PLANT = hexrgb("#4fae6a")
+PLANT_DK = hexrgb("#2e7a4a")
+LANTERN = hexrgb("#ffb347")
+LANTERN_GLOW = hexrgb("#ff9a3c")
 
 GRID_LINE = hexrgb("#241b55")
+BEACON = hexrgb("#ff4fd8")
+WARM_HI = hexrgb("#fff0c8")
 
 
 def RNG2(i, t):
@@ -149,7 +162,7 @@ def make_sky(img):
             col = blend(SKY_LOW, FOG_HI, t)
         else:
             t = (y - 56) / float(GROUND - 56)
-            col = blend(FOG_HI, FOG_TEAL, t)
+            col = blend(FOG_HI, HAZE, t)
         img[y, :, :] = col
     for _ in range(14):
         img[int(RNG.randint(0, 9)), int(RNG.randint(0, W))] = STAR
@@ -173,45 +186,76 @@ def draw_foggy_moon(img):
                     img[y, x] = MOON if band % 2 == 0 else MOON_DK
 
 
-def build_towers(img):
-    """远景与中景塔楼（固定布局，保证全息广告贴在大楼立面上）"""
-    # 远景
-    towers_back = [(38, 46, 10), (66, 50, 7), (92, 44, 12), (120, 48, 8),
-                   (148, 45, 9)]
-    for tx, ty, tw in towers_back:
-        img[ty:GROUND, tx:tx + tw] = TOWER_BACK
-        for y in range(ty + 2, GROUND, 5):
-            for x in range(tx + 1, tx + tw - 1, 3):
-                if RNG2(x * 31 + y * 7, 0) < 0.18:
-                    img[y, x] = WIN_DIM
-    # 中景摩天楼（更亮，窗户更密）
-    towers_mid = [
-        (34, 16, 22),   # 左一 高塔
-        (58, 30, 16),
-        (76, 14, 20),   # 中央最高
-        (98, 26, 14),
-        (114, 18, 24),  # 右侧高塔（带天线）
-        (140, 32, 18),
+def build_towers(img, t):
+    """三层楼群，参考《迷雾侦探》的远景处理：
+    最远层偏亮虚化、稀疏亮点窗；中远景轮廓更硬；近景塔楼清晰窗格 +
+    双面光影 + 屋顶装置 + 边缘霓虹光，让剪影从夜空里"浮"出来。"""
+    # 第 1 层：最远，空气透视偏亮，窗户少而亮
+    far1 = [
+        (38, 48, 12), (66, 52, 9), (92, 46, 14), (120, 50, 10), (148, 46, 11),
+        (34, 44, 8), (58, 42, 7), (104, 40, 8), (136, 42, 9),
     ]
-    for tx, ty, tw in towers_mid:
-        img[ty:GROUND, tx:tx + tw] = TOWER_MID
-        for y in range(ty + 1, GROUND - 1, 3):
-            for x in range(tx + 2, tx + tw - 2, 3):
-                r = RNG2(x * 17 + y * 13, 1)
-                if r < 0.22:
+    for tx, ty, tw in far1:
+        img[ty:GROUND, tx:tx + tw] = FAR_BLDG
+        for y in range(ty + 2, GROUND - 1, 7):
+            if RNG2(tx + y * 3, 5) < 0.16:
+                x = tx + 2 + int(RNG2(tx + y, 6) * (tw - 4))
+                img[y, x] = WIN_AMBER if RNG2(tx + y, 7) < 0.35 else WIN_CYAN
+        img[ty, tx:tx + tw] = blend(FAR_BLDG, WIN_DIM, 0.45)
+    # 第 2 层：中远景，轮廓更硬，稀疏窗点 + 天线
+    far2 = [(36, 36, 16), (60, 44, 12), (88, 34, 18), (112, 40, 16), (140, 38, 14)]
+    for tx, ty, tw in far2:
+        img[ty:GROUND, tx:tx + tw] = FAR_BLDG2
+        for y in range(ty + 1, GROUND - 1, 4):
+            for x in range(tx + 2, tx + tw - 2, 4):
+                r = RNG2(x * 7 + y * 13, 8)
+                if r < 0.08:
                     img[y, x] = WIN_DIM
-                elif r < 0.30:
+                elif r < 0.11:
                     img[y, x] = WIN_CYAN
-                elif r < 0.34:
+        if (tx + ty) % 40 < 16:
+            img[ty - 3:ty, tx + tw // 2 - 1:tx + tw // 2 + 1] = FAR_BLDG2
+    # 第 3 层：近景塔楼（清晰主体）
+    towers_mid = [
+        (34, 18, 20, 0), (56, 30, 16, 1), (72, 16, 20, 2),
+        (94, 26, 16, 3), (110, 20, 24, 4), (136, 32, 16, 5),
+    ]
+    for tx, ty, tw, idx in towers_mid:
+        # 左暗右亮（假体积光）
+        for y in range(ty, GROUND):
+            img[y, tx:tx + tw // 2] = MID_BODY
+            img[y, tx + tw // 2:tx + tw] = MID_BODY_L
+        # 窗格：1px 窗、4px 间距，稀疏点缀（少即是多）
+        for y in range(ty + 2, GROUND - 2, 4):
+            for x in range(tx + 2, tx + tw - 3, 4):
+                r = RNG2(x * 17 + y * 13, 1)
+                if r < 0.20:
+                    img[y, x] = WIN_DIM
+                elif r < 0.26:
+                    img[y, x] = WIN_CYAN
+                elif r < 0.29:
                     img[y, x] = WIN_AMBER
-        # 楼顶边缘微光
-        img[ty, tx:tx + tw] = blend(TOWER_MID, WIN_DIM, 0.6)
-        img[ty + 1, tx:tx + tw] = blend(TOWER_MID, WIN_DIM, 0.3)
-    # 天线
-    img[8:14, 122:124] = TOWER_MID
-    img[6:8, 121:125] = hexrgb("#ff2fd6")
-    img[10:14, 82:84] = TOWER_MID
-    img[8:10, 81:85] = hexrgb("#00f0ff")
+        # 顶部收边 + 右侧边缘霓虹光
+        img[ty, tx:tx + tw] = blend(MID_BODY, WIN_DIM, 0.65)
+        rim = TRIM_CYAN if idx % 2 == 0 else TRIM_PINK
+        img[ty + 2:GROUND - 1, tx + tw - 1] = blend(rim, MID_BODY_L, 0.38)
+        # 屋顶装置
+        if idx % 3 == 0:      # 天线 + 闪烁信标
+            img[ty - 5:ty, tx + tw // 2 - 1:tx + tw // 2 + 1] = MID_BODY_L
+            img[ty - 6, tx + tw // 2 - 1:tx + tw // 2 + 1] = (
+                BEACON if t % 6 < 3 else TRIM_CYAN)
+        elif idx % 3 == 1:    # 水塔
+            img[ty - 4:ty, tx + 3:tx + 8] = MID_BODY_L
+            img[ty - 5, tx + 4:tx + 7] = WIN_DIM
+            img[ty - 4, tx + 3:tx + 8] = blend(MID_BODY_L, WIN_DIM, 0.5)
+        else:                 # 楼顶广告牌边缘
+            img[ty - 2:ty, tx + 2:tx + tw - 2] = PANEL
+            img[ty - 3, tx + 2:tx + tw - 2] = TRIM_PINK if idx % 2 else TRIM_CYAN
+    # 中央最高的塔顶大天线
+    img[8:16, 82:84] = MID_BODY_L
+    img[6:8, 81:85] = hexrgb("#ff2fd6")
+    img[8:16, 122:124] = MID_BODY_L
+    img[6:8, 121:125] = hexrgb("#00f0ff")
 
 
 def draw_holo_panel(img, x0, y0, w, h, t, content="ai", seed=0):
@@ -280,7 +324,7 @@ def draw_light_cone(img, x0, w, y_top, t, color):
 # ----------------------------------------------------------------------------
 # 前景建筑（街边立面 + 店铺）
 # ----------------------------------------------------------------------------
-def draw_foreground_buildings(img):
+def draw_foreground_buildings(img, t):
     # 左楼
     img[:, :34] = WALL_BASE
     for y in range(0, GROUND, 11):
@@ -296,10 +340,22 @@ def draw_foreground_buildings(img):
             if r < 0.3:
                 img[y:y + 4, x:x + 4] = WIN_DIM
             elif r < 0.42:
-                img[y:y + 4, x:x + 4] = WIN_AMBER if r < 0.37 else WIN_CYAN
+                if r < 0.37:
+                    img[y:y + 4, x:x + 4] = WIN_AMBER
+                    img[y + 1, x + 1:x + 3] = blend(WIN_AMBER, WARM_HI, 0.5)
+                else:
+                    img[y:y + 4, x:x + 4] = WIN_CYAN
     # 左楼雨棚
     img[56:58, 2:32] = AWING
     img[57, 2:32] = blend(AWING, WALL_BASE, 0.5)
+    # 雨棚下的灯笼（暖光，轻微闪烁）
+    for li, lx in enumerate((7, 13, 19, 25)):
+        flick = (t + li) % 9 != 7
+        img[58, lx] = LANTERN if flick else blend(LANTERN, WALL_BASE, 0.45)
+        img[57, lx] = LANTERN_GLOW if flick else blend(LANTERN_GLOW, WALL_BASE, 0.55)
+        if flick:
+            img[58, lx - 1] = blend(LANTERN, WALL_BASE, 0.4)
+            img[58, lx + 1] = blend(LANTERN, WALL_BASE, 0.4)
     # 店铺橱窗（暖光）
     img[60:72, 4:30] = hexrgb("#241231")
     for y in range(61, 71, 3):
@@ -326,7 +382,11 @@ def draw_foreground_buildings(img):
             if r < 0.3:
                 img[y:y + 4, x:x + 4] = WIN_DIM
             elif r < 0.44:
-                img[y:y + 4, x:x + 4] = WIN_AMBER if r < 0.38 else WIN_CYAN
+                if r < 0.38:
+                    img[y:y + 4, x:x + 4] = WIN_AMBER
+                    img[y + 1, x + 1:x + 3] = blend(WIN_AMBER, WARM_HI, 0.5)
+                else:
+                    img[y:y + 4, x:x + 4] = WIN_CYAN
     # 右侧竖向霓虹灯管
     img[30:58, 166:168] = TRIM_CYAN
     img[30:58, 165] = blend(TRIM_CYAN, WALL_BASE, 0.55)
@@ -337,6 +397,13 @@ def draw_foreground_buildings(img):
         img[y:y + 6, 172:178] = PIPE
         img[y, 172:179] = PIPE_HI
         img[y + 5, 172:179] = PIPE_HI
+    # 阳台 + 盆栽（生活感细节）
+    for by in (26, 46):
+        img[by:by + 2, 168:180] = BALCONY
+        img[by + 2, 168:180] = RAIL
+        img[by - 1, 170] = PLANT
+        img[by - 1, 173] = PLANT_DK
+        img[by - 1, 176] = PLANT
 
 
 def draw_neon_kanji(img, x0, y0, glyph, color, hi, on):
@@ -465,13 +532,13 @@ def draw_fog(img, t):
         for y in range(band, band + 8):
             for x in range(W):
                 f = 0.5 + 0.5 * np.sin(2 * np.pi * (x / 46.0 + t / 54.0 + band))
-                amt = 0.10 + 0.10 * f
+                amt = 0.06 + 0.07 * f
                 img[y, x] = blend(tuple(img[y, x]), FOG_TEAL if band > 60 else FOG_HI, amt)
     # 地面薄雾
     for y in range(GROUND + 1, GROUND + 8):
         for x in range(W):
             f = 0.5 + 0.5 * np.sin(2 * np.pi * (x / 34.0 - t / 42.0))
-            img[y, x] = blend(tuple(img[y, x]), FOG_TEAL, 0.16 + 0.10 * f)
+            img[y, x] = blend(tuple(img[y, x]), FOG_TEAL, 0.10 + 0.08 * f)
 
 
 def blit_block(img, y, x0, w, h, color):
@@ -486,15 +553,10 @@ def draw_flying_cars(img, t):
     """雾中飞车：多条车流、双向、带光轨，无缝循环"""
     cars = [
         # (y, speed, period, dir, size, bright)
-        (13, 4, 216, 1, 1, 0.7),
-        (17, -4, 216, -1, 2, 0.75),
-        (21, 5, 270, 1, 2, 0.8),
-        (26, -6, 324, -1, 2, 0.85),
-        (32, 6, 324, 1, 3, 0.9),
-        (38, -4, 216, -1, 3, 0.95),
-        (44, 5, 270, 1, 4, 1.0),
-        (51, -6, 324, -1, 4, 1.0),
-        (60, 4, 216, 1, 5, 1.0),
+        (19, -4, 216, -1, 2, 0.8),
+        (28, 5, 270, 1, 2, 0.9),
+        (39, -4, 216, -1, 3, 0.95),
+        (48, 5, 270, 1, 4, 1.0),
     ]
     for y, sp, period, d, size, br in cars:
         v = abs(sp)
@@ -572,11 +634,11 @@ def draw_street_taxi(img, t):
     for k in range(1, 10):
         tx = x - k * 3
         if 0 <= tx < W:
-            img[y + 2, tx] = blend(hexrgb("#ff4fd8"), GROUND_BASE, 0.7 - 0.05 * k)
+            img[y + 2, tx] = blend(BEACON, GROUND_BASE, 0.7 - 0.05 * k)
     blit_block(img, y, x, 10, 4, TAXI_BODY)
     blit_block(img, y, x + 2, 5, 1, TAXI_SIGN)
     blit_block(img, y + 1, x + 2, 5, 1, hexrgb("#ff7ae0"))
-    blit_block(img, y, x, 1, 4, hexrgb("#ff4fd8"))
+    blit_block(img, y, x, 1, 4, BEACON)
     blit_block(img, y, x + 9, 1, 4, TAXI_HEAD)
     blit_block(img, y + 2, x + 1, 8, 1, CAR_GLOW)
 
@@ -666,7 +728,7 @@ def vignette(img):
             d = np.hypot(x - cx, y - cy) / maxd
             if d > 0.5:
                 img[y, x] = blend(tuple(img[y, x]), (0, 0, 0),
-                                  0.30 * (d - 0.5) ** 1.3)
+                                  0.24 * (d - 0.5) ** 1.3)
 
 
 # ----------------------------------------------------------------------------
@@ -676,14 +738,14 @@ def build_frame(t):
     img = np.zeros((H, W, 3), dtype=np.uint8)
     make_sky(img)
     draw_foggy_moon(img)
-    build_towers(img)
+    build_towers(img, t)
     # 中景全息广告（贴在大楼立面）
     draw_holo_panel(img, 60, 30, 12, 9, t, "ai", seed=0)
     draw_holo_panel(img, 100, 26, 10, 8, t, "arm", seed=9)
     draw_holo_panel(img, 122, 30, 12, 9, t, "data", seed=18)
     draw_holo_panel(img, 142, 36, 10, 7, t, "data", seed=27)
     draw_fog(img, t)
-    draw_foreground_buildings(img)
+    draw_foreground_buildings(img, t)
     # 楼顶霓虹招牌 + 左墙汉字招牌
     roof_on = not (9 <= t <= 11 or t == 29 or 44 <= t <= 45)
     kanji_on = not (6 <= t <= 7 or t == 25 or 38 <= t <= 39)
@@ -723,8 +785,10 @@ def main():
 
     all_colors = [
         SKY_TOP, SKY_MID, SKY_LOW, FOG_HI, FOG_TEAL, FOG_DARK, STAR,
+        HAZE,
         MOON, MOON_DK,
         TOWER_BACK, TOWER_MID, TOWER_FRONT, WIN_DIM, WIN_CYAN, WIN_AMBER,
+        FAR_BLDG, FAR_BLDG2, MID_BODY, MID_BODY_L,
         WALL_BASE, WALL_DARK, PANEL, PIPE, PIPE_HI, TRIM_CYAN, TRIM_PINK,
         LAMP, LAMP_GLOW, STORE_WARM, STORE_DOOR, AWING,
         HOLO_BG, HOLO_A, HOLO_B, HOLO_C, HOLO_SCAN, HOLO_DOT, HOLO_FAINT,
@@ -735,7 +799,8 @@ def main():
         CAR_BODY, CAR_CANOPY, CAR_TAIL, CAR_HEAD, CAR_GLOW,
         TAXI_BODY, TAXI_SIGN, TAXI_HEAD,
         KIOSK, KIOSK_SCREEN, UI_BORDER, UI_BAR, UI_BAR2,
-        GRID_LINE,
+        GRID_LINE, BALCONY, RAIL, PLANT, PLANT_DK, LANTERN, LANTERN_GLOW,
+        BEACON, WARM_HI,
     ]
     seen = set()
     colors = [c_ for c_ in all_colors if not (c_ in seen or seen.add(c_))]
