@@ -172,9 +172,9 @@
   <img src="assets/divider.svg" width="100%" alt="">
   <h2 style="color:#9ec59a;text-shadow:0 0 14px rgba(158,197,154,.55);letter-spacing:3px;">🌿 森林之梦 &nbsp;|&nbsp; Forest Dream</h2>
 
-  <img src="assets/forest-dream.gif" width="100%" alt="Forest Dream —— 治愈系自然森林像素短片：晨雾、微风、动物、阵雨与雨后阳光（6 秒无缝循环）">
+  <img src="assets/forest-dream.gif" width="100%" alt="Forest Dream —— 自然森林像素短片：晨雾、微风、动物、阵雨与雨后阳光">
   <p>
-    晨雾 · 微风 · 动物 · 阵雨 · 雨后阳光 —— 治愈系像素短片，6 秒无缝循环<br>
+    晨雾 · 微风 · 动物 · 阵雨 · 雨后阳光<br>
     <sub>由 <code>scripts/make_forest_dream.py</code> 纯代码逐像素绘制</sub>
   </p>
 </div>
