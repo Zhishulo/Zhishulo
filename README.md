@@ -30,7 +30,7 @@
 
   <p>
     🎓 一名正在向 <b>AI 研究者</b> 进化的 <b>大学生</b><br>
-    🤖 沉迷深度学习 / NLP / 智能体 &nbsp;·&nbsp; 🎮 喜欢用代码写故事（Galgame）&nbsp;·&nbsp; 🌸 重度二次元
+    🤖 沉迷深度学习 / NLP / 智能体 &nbsp;·&nbsp; 🎮 喜欢用代码写故事（Galgame）&nbsp;·&nbsp; 🌸 二次元
   </p>
 
   <p>
